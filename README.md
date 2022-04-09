@@ -1,4 +1,4 @@
-CHAT APP - Single Page
+Luck Game
 ----------------------
 
 ### SETUP 
