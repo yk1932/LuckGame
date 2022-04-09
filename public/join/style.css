@@ -1,0 +1,114 @@
+*,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height:100%;
+  background-color: #7C4068;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.landing_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+.landing_header {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  letter-spacing: 0.15em;
+}
+
+.landing_button {
+  font-weight: 100px;
+  letter-spacing: 0.2em;
+  padding: 0.5rem, 1.5rem;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.276);
+  margin: 0.4rem 0.4rem 0.4rem 0.4rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  width: 19rem;
+  height: 5%;
+  font-size: 1rem;
+}
+.dark_layer {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.475);
+  z-index: -1;
+  position: fixed;
+}
+
+.sub-container {
+  display: flex;
+  width: 50%;
+  max-width: 1200px;
+}
+.chat-input {
+  flex-direction: row;
+  align-items: left;
+}
+.chat-feed {
+  flex-direction: column;
+  align-items: left;
+}
+input {
+  display: inline;
+  padding: 5px;
+  margin: 10px 10px 0 0;
+  height: 20px;
+}
+.roomidlabel {
+  color: white;
+}
+
+.roomid {
+  background-color:rgba(255, 255, 255, 0.425);
+  border-radius: 15px;
+  height: 2rem;
+  width: 25rem;
+}
+
+
+.chat-input-name {
+  width: 20%;
+}
+.chat-input-msg {
+  width: 65%;
+}
+button {
+  height: 28px;
+  margin-top: 10px;
+}
+.chat-header {
+  margin-top: 10px;
+  font-size: 24px;
+  text-align: center;
+}
+.chat-box {
+  border: 2px solid black;
+  height: 300px;
+  padding-left: 5px;
+  overflow: auto;
+}
+
+.lobby_wall {
+  height: 80vh;
+  z-index: -2;
+  position: fixed;
+}
+p {
+  overflow-wrap: break-word;
+}
+@media (max-width: 800px) {
+  .sub-container {
+    width: 75%;
+  }
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" />
+    <title>Luck Game</title>
+  </head>
+  <body>
+      <img id="lobby_wall" class="lobby_wall" src="images/lobbyWall.png"> 
+      <div id="dark_layer" class="dark_layer"></div>
+
+    <section class="landing_container">
+      <h1 class="landing_header">TEST-YOUR-LUCK</h1>
+      <button id="create_button" class="landing_button">Create Room</button>
+      <button id="join_button" class="landing_button">Join Room</button>
+    </section>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+    <script>
+      (function () {
+        app.initialize();
+      })();
+    </script>
+  </body>
+</html>
