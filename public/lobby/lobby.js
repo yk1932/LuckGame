@@ -13,8 +13,12 @@ const app = {
 
     const playButton = document.getElementById("play_button");
     playButton.addEventListener("click", () => {
+      let data = {
+        room: randomRoom,
+      };
       console.log("play clicked");
-      window.location = "../game";
+      // window.location = "../game";
+      socket.emit("startPressed", data);
     });
 
     const backButton = document.getElementById("back_button");
@@ -23,7 +27,6 @@ const app = {
       window.location = "/";
       console.log("window.location");
     });
-
 
     let socket = io();
     socket.on("connect", () => {
@@ -47,6 +50,13 @@ const app = {
 
         console.log(data[i]);
       }
+    });
+    socket.on("gameStart", () => {
+      console.log("game starting");
+      sessionStorage.setItem("name", randomName);
+      sessionStorage.setItem("room", randomRoom);
+
+      window.location = "../game";
     });
     // socket.on("userTyping", () => {
     //   console.log("user is typing");
