@@ -15,8 +15,8 @@
     <img id="lobby_wall" class="lobby_wall" src="../images/lobbyWall.png" />
     <div id="dark_layer" class="dark_layer"></div>
     <div class="text_div none">
-      <h2 class="status_header">Level 1</h2>
-      <h2 class="result_header">Pick a door to escape...</h2>
+      <h2 class="status_header" id="status_header"></h2>
+      <h2 class="result_header" id="result_header"></h2>
     </div>
     <h2 class="turn_header none"></h2>
 
@@ -29,6 +29,16 @@
         <img id="door3" class="door" data-num="3" src="../images/door.png" />
         <img id="door4" class="door" data-num="4" src="../images/door.png" />
       </div>
+
+      <img id="chaliceTable" class="chaliceTable none" src="../images/table.png" />
+
+      <div class="chalice_container none" id="chalice_container">
+        <img id="chalice1" class="chalice" data-num="1" src="../images/cup.png" />
+        <img id="chalice2" class="chalice" data-num="2" src="../images/cup.png" />
+        <img id="chalice3" class="chalice" data-num="3" src="../images/cup.png" />
+      </div>
+
+
     </section>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="game.js"></script>

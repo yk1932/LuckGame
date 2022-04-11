@@ -9,12 +9,11 @@ let server = http.createServer(app);
 
 let rooms = {};
 let users = {};
-
-let doorGuessNum = 0;
 let currentTurn = 0;
 let turn = 0;
 let players = [];
 let gameStart = false;
+let levelTwo = false;
 
 const randomize = (totalNum) => {
   randomNum = Math.floor(Math.random() * totalNum + 1);
@@ -22,7 +21,7 @@ const randomize = (totalNum) => {
 };
 
 let doorNum = randomize(4);
-console.log("the rnaodm num!@#!@#!@#!#!", doorNum);
+console.log(randomize(4));
 
 //Initialize socket.io
 let io = require("socket.io");
@@ -162,22 +161,18 @@ io.sockets.on("connect", (socket) => {
     console.log(data.guess);
     socket.roomName = data.room;
     let playerStatus = true;
+
     if (data.guess == doorNum) {
       playerStatus = false;
-      playerIndex = players.indexOf(socket.name);
-      console.log("le player index in guess", playerIndex);
-      players.splice(playerIndex, 1);
-      console.log(players);
-      doorGuessNum = 0;
       for (let i = 0; i < users[socket.roomName].length; i++) {
         console.log(users[socket.roomName][i]);
         if (users[socket.roomName][i].name == socket.name) {
           users[socket.roomName][i].status = false;
+
         }
       }
-      io.to(socket.roomName).emit("gameEnded");
+    io.to(socket.roomName).emit("gameOver");
     }
-
     console.log(users[socket.roomName]);
     console.log("guy dead frfr");
 
@@ -188,14 +183,6 @@ io.sockets.on("connect", (socket) => {
     };
     socket.emit("yourResult", player);
     socket.to(socket.roomName).emit("playerResult", player);
-    doorGuessNum++;
-    if (doorGuessNum == 3) {
-      console.log("gunna reset");
-      doorNum = randomize(4);
-      console.log("new doornum", doorNum);
-      doorGuessNum = 0;
-      io.to(socket.roomName).emit("resetDoor");
-    }
 
     currentTurn++;
     turn = currentTurn % players.length;
@@ -207,6 +194,13 @@ io.sockets.on("connect", (socket) => {
     console.log(nextPlayer);
     console.log(socket.roomName);
     io.to(socket.roomName).emit("playerTurn", nextPlayer);
+  });
+
+  //Level two has begun
+  socket.on("levelTwo", () => {
+    console.log("Level two start eeeeeK")
+    io.to(socket.roomName).emit("levelTwoStart");
+
   });
 
   socket.on("disconnect", () => {
@@ -240,7 +234,7 @@ io.sockets.on("connect", (socket) => {
 });
 
 //run the createServer
-let port = process.env.PORT || 4000;
+let port = process.env.PORT || 4400;
 server.listen(port, () => {
   console.log("Server listening at port: " + port);
 });
