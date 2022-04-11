@@ -9,6 +9,8 @@ let server = http.createServer(app);
 
 let rooms = {};
 let users = {};
+
+let doorGuessNum = 0;
 let currentTurn = 0;
 let turn = 0;
 let players = [];
@@ -20,7 +22,7 @@ const randomize = (totalNum) => {
 };
 
 let doorNum = randomize(4);
-console.log(randomize(4));
+console.log("the rnaodm num!@#!@#!@#!#!", doorNum);
 
 //Initialize socket.io
 let io = require("socket.io");
@@ -162,13 +164,20 @@ io.sockets.on("connect", (socket) => {
     let playerStatus = true;
     if (data.guess == doorNum) {
       playerStatus = false;
+      playerIndex = players.indexOf(socket.name);
+      console.log("le player index in guess", playerIndex);
+      players.splice(playerIndex, 1);
+      console.log(players);
+      doorGuessNum = 0;
       for (let i = 0; i < users[socket.roomName].length; i++) {
         console.log(users[socket.roomName][i]);
         if (users[socket.roomName][i].name == socket.name) {
           users[socket.roomName][i].status = false;
         }
       }
+      io.to(socket.roomName).emit("gameEnded");
     }
+
     console.log(users[socket.roomName]);
     console.log("guy dead frfr");
 
@@ -179,6 +188,14 @@ io.sockets.on("connect", (socket) => {
     };
     socket.emit("yourResult", player);
     socket.to(socket.roomName).emit("playerResult", player);
+    doorGuessNum++;
+    if (doorGuessNum == 3) {
+      console.log("gunna reset");
+      doorNum = randomize(4);
+      console.log("new doornum", doorNum);
+      doorGuessNum = 0;
+      io.to(socket.roomName).emit("resetDoor");
+    }
 
     currentTurn++;
     turn = currentTurn % players.length;

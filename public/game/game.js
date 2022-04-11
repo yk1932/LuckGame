@@ -67,6 +67,20 @@ const app = {
       app.resultHeader.classList.remove("none");
     });
 
+    socket.on("resetDoor", () => {
+      console.log("resetting door!");
+      setTimeout(() => {
+        for (let i = 0; i < doors.length; i++) {
+          doors[i].src = "../images/door.png";
+          doors[i].classList.remove("pointerNone");
+        }
+      }, 2000);
+    });
+
+    socket.on("gameEnded", () => {
+      console.log("game has ended someone kaboom'd");
+    });
+
     let doors = document.querySelectorAll(".door");
     app.randomize();
     for (let i = 0; i < doors.length; i++) {

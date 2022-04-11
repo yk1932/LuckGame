@@ -130,6 +130,11 @@ const app = {
       "Angy Cat",
       "Slowpoke",
       "Little Timmy",
+      "Hobbin Rood",
+      "Psyduck",
+      "Snorlax",
+      "Meowrio",
+      "One Spaghet",
     ];
     console.log(app.getRandomInt(0, nameArray.length));
 
