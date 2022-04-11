@@ -75,6 +75,14 @@ body {
   font-size: 4rem;
   margin-bottom: 1rem;
 }
+.turn_header {
+  color: white;
+  font-size: 3rem;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .result_header {
   font-size: 2rem;
 }

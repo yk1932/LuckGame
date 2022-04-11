@@ -1,6 +1,7 @@
 const app = {
   randomNum: 0,
   gameLength: document.querySelectorAll(".door").length,
+  gameContainer: document.querySelector(".game_container"),
   initialize: () => {
     app.showText();
     console.log(sessionStorage.getItem("name"));
@@ -12,7 +13,21 @@ const app = {
         name: sessionStorage.getItem("name"),
         room: sessionStorage.getItem("room"),
       };
-      socket.emit("userData", data);
+      socket.emit("gameInitialize", data);
+    });
+
+    socket.on("playerTurn", (data) => {
+      if (data.name == sessionStorage.getItem("name")) {
+        console.log("my turn");
+
+        app.turnHeader.classList.remove("none");
+        app.turnHeader.innerText = "Your turn!";
+        app.gameContainer.classList.remove("pointerNone");
+      } else {
+        app.turnHeader.classList.remove("none");
+        app.turnHeader.innerText = `${data.name}'s turn!`;
+        app.gameContainer.classList.add("pointerNone");
+      }
     });
 
     socket.on("yourResult", (data) => {
@@ -59,6 +74,7 @@ const app = {
         answer = doors[i].dataset.num;
         console.log(answer);
         data = {
+          room: sessionStorage.getItem("room"),
           guess: answer,
         };
         socket.emit("doorGuess", data);
@@ -81,6 +97,7 @@ const app = {
   textDiv: document.querySelector(".text_div"),
   statusHeader: document.querySelector(".status_header"),
   resultHeader: document.querySelector(".result_header"),
+  turnHeader: document.querySelector(".turn_header"),
   showText: () => {
     setTimeout(() => {
       app.textDiv.classList.remove("none");

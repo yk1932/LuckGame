@@ -42,9 +42,10 @@ const app = {
         playersContainer.removeChild(playersContainer.lastChild);
       }
       console.log(data);
+      console.log(data[0].name);
       for (let i = 0; i < data.length; i++) {
         let newDiv = document.createElement("div");
-        newDiv.innerHTML = data[i];
+        newDiv.innerHTML = data[i].name;
         newDiv.classList.add("player_container");
         playersContainer.appendChild(newDiv);
 
