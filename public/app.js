@@ -6,7 +6,6 @@ const app = {
     createButton.addEventListener("click", () => {
       console.log("create clicked");
       window.location = "/lobby";
-      let roomCode = app.randomCode();
       console.log(roomCode);
     });
 

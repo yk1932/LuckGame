@@ -6,12 +6,12 @@ body {
 }
 
 body {
-  height:100%;
-  background-color: #7C4068;
+  height: 100%;
+  background-color: #7c4068;
   font-family: Arial, Helvetica, sans-serif;
 }
 .container {
-   display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -20,11 +20,11 @@ body {
 }
 
 .players_container {
-  width: 60%;
+  /* width: 60%;
   height: 50%;
   background-color: white;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; */
 }
 .players_container {
   color: white;
@@ -32,10 +32,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   line-height: 2em;
   width: 70%;
   height: 40%;
-  background-color:rgba(158, 98, 138, 0.529);
+  background-color: rgba(158, 98, 138, 0.529);
   border-radius: 30px;
   margin: 30px;
 }

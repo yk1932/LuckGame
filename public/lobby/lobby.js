@@ -1,7 +1,7 @@
 const app = {
   initialize: () => {
     // const randomRoom = app.generateCode();
-    const randomRoom = "123";
+    const randomRoom = "ABDDEF";
     console.log(randomRoom);
     randomName = app.generateName();
     console.log(randomName);
@@ -45,12 +45,21 @@ const app = {
       console.log(data[0].name);
       for (let i = 0; i < data.length; i++) {
         let newDiv = document.createElement("div");
-        newDiv.innerHTML = data[i].name;
+        console.log("in this loop", randomName, data[i].name);
+        if (randomName == data[i].name) {
+          newDiv.innerHTML = `★ ${data[i].name}`;
+        } else {
+          newDiv.innerHTML = `   ${data[i].name}`;
+        }
         newDiv.classList.add("player_container");
         playersContainer.appendChild(newDiv);
 
         console.log(data[i]);
       }
+    });
+    socket.on("err", () => {
+      alert("The room is full");
+      window.location = "../";
     });
     socket.on("gameStart", () => {
       console.log("game starting");
@@ -59,7 +68,6 @@ const app = {
 
       window.location = "../game";
     });
-
   },
   generateCode: () => {
     let result = "";
@@ -85,6 +93,50 @@ const app = {
       "Angy Cat",
       "Slowpoke",
       "Little Timmy",
+      "Hobbin Rood",
+      "Psyduck",
+      "Snorlax",
+      "Meowrio",
+      "One Spaghet",
+      "Bugs Bunny",
+      "Charlie Brown",
+      "Snoopy",
+      "Daffy Duck",
+      "Mickey Mouse",
+      "Donald Duck",
+      "Popeye",
+      "Scooby-Doo",
+      "Jerry",
+      "Tomv",
+      "Garfield",
+      "Woody",
+      "Buzz Lightyear",
+      "Simba",
+      "Genie",
+      "Mulan",
+      "Ursula",
+      "Rapunzel",
+      "Betty Boop",
+      "Amoongus",
+      "Squirtle",
+      "Pikachu",
+      "Gengar",
+      "I am hungry...",
+      "Chimken Tendies",
+      "Chimken Nuggies",
+      "Need coffee...",
+      "Kierin",
+      "Breadth First Search",
+      "Depth First Search",
+      "Error 404",
+      "Luigi",
+      "Baby Luigi",
+      "Baby Mario",
+      "Lucid",
+      "#1 backseat gamer",
+      "Skiddo",
+      "Marshadow",
+      "Dragapult",
     ];
     console.log(app.getRandomInt(0, nameArray.length));
 
