@@ -21,6 +21,7 @@ const app = {
       let socket = io();
       socket.on("connect", () => {
         console.log("connected to server");
+        //sending user data
         let data = {
           name: sessionStorage.getItem("name"),
           room: sessionStorage.getItem("room"),
@@ -29,6 +30,7 @@ const app = {
       });
 
       socket.on("playerTurn", (data) => {
+        //receiving data for turns
         if (data.name == sessionStorage.getItem("name")) {
           setTimeout(() => {
             app.turnHeader.classList.remove("none");
@@ -58,6 +60,7 @@ const app = {
 
       socket.on("yourResult", (data) => {
         console.log(data);
+        //showcasing the result for the user on his/her
         let door = document.getElementById(`door${data.door}`);
         door.classList.add("pointerNone");
         app.resultHeader.classList.remove("none");
@@ -81,6 +84,7 @@ const app = {
         app.textDiv.classList.remove("none");
         // app.resultHeader.classList.remove("none");
       });
+      //for evreyone else, show the result
       socket.on("playerResult", (data) => {
         console.log(data);
         let door = document.getElementById(`door${data.door}`);
@@ -103,9 +107,8 @@ const app = {
           }, 2000);
         }
         app.textDiv.classList.remove("none");
-        // app.resultHeader.classList.remove("none");
       });
-
+      //GAME over for game 1
       socket.on("gameOver", () => {
         //Remove all doors after 1 second of ending game
         app.gameContainer.classList.add("pointerNone");
@@ -125,7 +128,7 @@ const app = {
           socket.emit("levelTwo");
         }, 3500);
       });
-
+      //reset door functiin where 3/4 doors are open so the 4th guy doesn't just die
       socket.on("resetDoor", () => {
         console.log("resetting door!");
         app.resetHeader.classList.remove("none");
@@ -138,13 +141,12 @@ const app = {
           }
         }, 2000);
       });
-
+      //initializing the doors and adding event listeners
       let doors = document.querySelectorAll(".door");
       for (let i = 0; i < doors.length; i++) {
         doors[i].addEventListener("click", (e) => {
           answer = doors[i].dataset.num;
           console.log(answer);
-          // app.levelTwo();
           data = {
             room: sessionStorage.getItem("room"),
             guess: answer,
@@ -152,6 +154,7 @@ const app = {
           socket.emit("doorGuess", data);
         });
       }
+
       socket.on("levelTwoStart", () => {
         // game intro
         setTimeout(() => {
@@ -178,7 +181,7 @@ const app = {
           socket.emit("beginLevelTwo");
         }, 6000);
       });
-
+      //same as above for game 2
       socket.on("yourChaliceResult", (data) => {
         console.log("iN MY CHALICE CHALICE", data);
         let chalice = document.getElementById(`chalice${data.chalice}`);
@@ -203,7 +206,6 @@ const app = {
           }, 2000);
         }
         app.textDiv.classList.remove("none");
-        // app.resultHeader.classList.remove("none");
       });
       socket.on("playerChaliceResult", (data) => {
         console.log("iN PLAYER CHALICE", data);
@@ -211,15 +213,12 @@ const app = {
         chalice.classList.add("pointerNone");
         app.resultHeader.classList.remove("none");
         if (data.result) {
-          console.log("PLAYER LIVED");
-
           app.resultHeader.innerText = `${data.player} lived`;
           chalice.src = "../images/emptyCup.png";
           setTimeout(() => {
             app.resultHeader.classList.add("none");
           }, 2000);
         } else {
-          console.log("you died");
           app.resultHeader.innerText = `${data.player} died`;
           chalice.src = "../images/poisonCup.png";
           setTimeout(() => {
@@ -284,21 +283,16 @@ const app = {
         //Making teeth interactable
       });
       socket.on("yourToothResult", (data) => {
-        console.log("iN MY CHALICE CHALICE", data);
         let tooth = document.getElementById(`tooth${data.tooth}`);
-        console.log("data.chalcie", data.tooth);
         tooth.classList.add("pointerNone");
         app.resultHeader.classList.remove("none");
-        console.log("FLJSIOJDOIFJSIOD", tooth);
         if (data.result) {
-          console.log("you lived");
           app.resultHeader.innerText = "You lived";
           tooth.style.fill = "#D3D2D2";
           setTimeout(() => {
             app.resultHeader.classList.add("none");
           }, 2000);
         } else {
-          console.log("you died");
           app.resultHeader.innerText = `You died`;
 
           let crocodileClosed = document.getElementById("crocodileClosed");

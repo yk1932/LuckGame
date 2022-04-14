@@ -1,7 +1,8 @@
 const app = {
   initialize: () => {
     // const randomRoom = app.generateCode();
-    const randomRoom = "ABDDEF";
+    //just manually set a room
+    const randomRoom = "ABEEEG";
     console.log(randomRoom);
     randomName = app.generateName();
     console.log(randomName);
@@ -11,16 +12,16 @@ const app = {
     codeText.style.color = "white";
     const playersContainer = document.getElementById("players_container");
 
+    //sending signal when play button is pressed
     const playButton = document.getElementById("play_button");
     playButton.addEventListener("click", () => {
       let data = {
         room: randomRoom,
       };
       console.log("play clicked");
-      // window.location = "../game";
       socket.emit("startPressed", data);
     });
-
+    //go back to start page
     const backButton = document.getElementById("back_button");
     backButton.addEventListener("click", () => {
       console.log("back clicked");
@@ -37,6 +38,8 @@ const app = {
       };
       socket.emit("userData", data);
     });
+
+    //loading players in lobby
     socket.on("loadPlayers", (data) => {
       while (playersContainer.firstChild) {
         playersContainer.removeChild(playersContainer.lastChild);
@@ -61,6 +64,7 @@ const app = {
       alert("The room is full");
       window.location = "../";
     });
+    //moving to game page
     socket.on("gameStart", () => {
       console.log("game starting");
       sessionStorage.setItem("name", randomName);
@@ -79,13 +83,7 @@ const app = {
     }
     return result;
   },
-  capFirst: (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  },
 
-  getRandomInt: (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  },
   generateName: () => {
     let nameArray = [
       "Bonkasaurus Rex",
