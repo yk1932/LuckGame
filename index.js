@@ -87,25 +87,6 @@ io.sockets.on("connect", (socket) => {
     io.to(socket.roomName).emit("loadPlayers", playerList);
   });
 
-  // socket.on("startPressed", (data) => {
-  //   socket.roomName = data.room;
-  //   console.log("press clicked");
-
-  //   //starting game (going from lobby to game)
-  //   io.to(socket.roomName).emit("gameStart");
-  //   if (rooms[socket.roomName]) {
-  //     rooms[socket.roomName]++;
-  //   } else {
-  //     rooms[socket.roomName] = 1;
-  //   }
-
-  //   if (users[socket.roomName]) {
-  //     users[socket.roomName].push(socket.name);
-  //   } else {
-  //     users[socket.roomName] = [socket.name];
-  //   }
-  // });
-
   socket.on("gameInitialize", (data) => {
     //initializing the game (when we reach the game page)
     console.log("in game initialize");
@@ -154,7 +135,6 @@ io.sockets.on("connect", (socket) => {
     } else {
       rooms[socket.roomName] = 1;
     }
-    console.log("ROOMBEG", rooms[socket.roomName]);
     if (users[socket.roomName]) {
       users[socket.roomName].push(socket.name);
     } else {
