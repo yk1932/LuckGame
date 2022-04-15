@@ -1,4 +1,4 @@
-Project Two: Luck Game | Cbris + Yeji
+Project Two: Luck Game | Chris + Yeji
 ----------------------
 
 ![alt text](https://github.com/yk1932/LuckGame/blob/main/documentationImages/3.png)
@@ -11,9 +11,9 @@ Test-Your-Luck is a 4 player connected application game where users can play thr
 ![alt text](https://github.com/yk1932/LuckGame/blob/main/documentationImages/1.png)
 
 
-* Link to gGitch: [https://fire-shining-magnesium.glitch.me/](https://fire-shining-magnesium.glitch.me/)
-* Link to Github Repository: https://github.com/yk1932/LuckGame
-* Link to notion Documentation: https://generated-smartphone-55e.notion.site/Project-Two-Documentation-0764310fa3f842d891bd0f97bed0ba00
+* Link to gitch: [https://fire-shining-magnesium.glitch.me/](https://fire-shining-magnesium.glitch.me/)
+* Link to github repository: https://github.com/yk1932/LuckGame
+* Link to notion documentation: https://generated-smartphone-55e.notion.site/Project-Two-Documentation-0764310fa3f842d891bd0f97bed0ba00
 
 ## Process
 
