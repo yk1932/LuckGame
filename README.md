@@ -1,12 +1,19 @@
 Project Two: Luck Game | Cbris + Yeji
 ----------------------
 
+![alt text](https://github.com/yk1932/LuckGame/blob/main/documentationImages/3.png)
+
+
 ## Description + Inspiration
 
 Test-Your-Luck is a 4 player connected application game where users can play three rounds of chance games to compete which each other to see who is the luckiest out of the group 🍀. The main structure of the game was inspired by Jackbox Games where players enter a room code to access a game from their smartphones or tablets and play a set of mini games.
 
-* Link to glitch: [https://fire-shining-magnesium.glitch.me/](https://fire-shining-magnesium.glitch.me/)
+![alt text](https://github.com/yk1932/LuckGame/blob/main/documentationImages/1.png)
+
+
+* Link to gGitch: [https://fire-shining-magnesium.glitch.me/](https://fire-shining-magnesium.glitch.me/)
 * Link to Github Repository: https://github.com/yk1932/LuckGame
+* Link to notion Documentation: https://generated-smartphone-55e.notion.site/Project-Two-Documentation-0764310fa3f842d891bd0f97bed0ba00
 
 ## Process
 
@@ -43,6 +50,8 @@ We started with identifying the design objectives of the game.
 ### Wireframing
 
 With these design objectives in mind, we created a wireframe on Figma, along with all the visuals we would need for the game.
+
+![alt text](https://github.com/yk1932/LuckGame/blob/main/documentationImages/2.png)
 
 ### Coding
 
