@@ -8,6 +8,7 @@ const app = {
     joinButton.addEventListener("click", () => {
       console.log("join clicked");
       console.log(roomInput.value);
+      sessionStorage.setItem("room", roomInput.value);
       window.location = "../lobby";
     });
 

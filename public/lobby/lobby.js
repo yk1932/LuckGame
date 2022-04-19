@@ -2,7 +2,11 @@ const app = {
   initialize: () => {
     // const randomRoom = app.generateCode();
     //just manually set a room
-    const randomRoom = "ABEEEG";
+    if (!sessionStorage.getItem("room")) {
+      randomRoom = "ABEEEG";
+    } else {
+      randomRoom = sessionStorage.getItem("room");
+    }
     console.log(randomRoom);
     randomName = app.generateName();
     console.log(randomName);
@@ -156,5 +160,5 @@ const app = {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-  }
+  },
 };
