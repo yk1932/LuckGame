@@ -64,6 +64,11 @@ const app = {
       alert("The room is full");
       window.location = "../";
     });
+
+    socket.on("notenough", () => {
+      alert("Not enough people, we need four!");
+    });
+
     //moving to game page
     socket.on("gameStart", () => {
       console.log("game starting");
@@ -147,4 +152,9 @@ const app = {
     //   capFirst(name2[getRandomInt(0, name2.length + 1)]);
     // return name;
   },
+  getRandomInt: (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
 };

@@ -127,6 +127,7 @@ io.sockets.on("connect", (socket) => {
   });
 
   socket.on("startPressed", (data) => {
+    if (io.engine.clientsCount == connectionsLimit) {
     socket.roomName = data.room;
     console.log("press clicked");
     io.to(socket.roomName).emit("gameStart");
@@ -142,6 +143,9 @@ io.sockets.on("connect", (socket) => {
     }
     console.log("rooms: ", rooms);
     console.log("is for game");
+  } else {
+    socket.emit("notenough");
+  }
   });
 
   socket.on("doorGuess", (data) => {
