@@ -13,7 +13,7 @@ const app = {
     });
 
     backButton.addEventListener("click", () => {
-      console.log("join clicked");
+      console.log("back clicked");
       window.location = "/";
     });
   },
