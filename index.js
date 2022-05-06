@@ -128,24 +128,24 @@ io.sockets.on("connect", (socket) => {
 
   socket.on("startPressed", (data) => {
     if (io.engine.clientsCount == connectionsLimit) {
-    socket.roomName = data.room;
-    console.log("press clicked");
-    io.to(socket.roomName).emit("gameStart");
-    if (rooms[socket.roomName]) {
-      rooms[socket.roomName]++;
+      socket.roomName = data.room;
+      console.log("press clicked");
+      io.to(socket.roomName).emit("gameStart");
+      if (rooms[socket.roomName]) {
+        rooms[socket.roomName]++;
+      } else {
+        rooms[socket.roomName] = 1;
+      }
+      if (users[socket.roomName]) {
+        users[socket.roomName].push(socket.name);
+      } else {
+        users[socket.roomName] = [socket.name];
+      }
+      console.log("rooms: ", rooms);
+      console.log("is for game");
     } else {
-      rooms[socket.roomName] = 1;
+      socket.emit("notenough");
     }
-    if (users[socket.roomName]) {
-      users[socket.roomName].push(socket.name);
-    } else {
-      users[socket.roomName] = [socket.name];
-    }
-    console.log("rooms: ", rooms);
-    console.log("is for game");
-  } else {
-    socket.emit("notenough");
-  }
   });
 
   socket.on("doorGuess", (data) => {
