@@ -124,12 +124,14 @@ io.sockets.on("connect", (socket) => {
       name: players[currentTurn],
     };
     io.to(socket.roomName).emit("playerTurn", turnData);
+
   });
 
   socket.on("startPressed", (data) => {
     if (io.engine.clientsCount == connectionsLimit) {
       socket.roomName = data.room;
       console.log("press clicked");
+      // io.to(socket.roomName).emit("gameOver3");
       io.to(socket.roomName).emit("gameStart");
       if (rooms[socket.roomName]) {
         rooms[socket.roomName]++;
@@ -172,6 +174,7 @@ io.sockets.on("connect", (socket) => {
       }
       //signal game is over and to go to next game
       io.to(socket.roomName).emit("gameOver");
+
       turn = 0;
       currentTurn = 0;
     } else {
@@ -210,7 +213,9 @@ io.sockets.on("connect", (socket) => {
   //initialize the page for game 2
   socket.on("levelTwo", () => {
     console.log("Level two start eeeeeK", players);
-    io.to(socket.roomName).emit("levelTwoStart");
+    io.to(socket.roomName).emit("gameOver3");
+
+    // io.to(socket.roomName).emit("levelTwoStart");
   });
   //actually beginning game 2 and signalling to players to start their turn
   //similar to code above
@@ -310,6 +315,12 @@ io.sockets.on("connect", (socket) => {
     };
     socket.emit("yourToothResult", player);
     socket.to(socket.roomName).emit("playerToothResult", player);
+  });
+
+  socket.on("levelFour", () => {
+    console.log("Level four start eeeeeK", players);
+    console.log("123123", players[turn], turn);
+    io.to(socket.roomName).emit("levelFourStart");
   });
 
   socket.on("disconnect", () => {

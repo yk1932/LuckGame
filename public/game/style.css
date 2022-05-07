@@ -105,8 +105,8 @@ body {
 .dark_layer {
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.475);
-  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 5;
   position: fixed;
 }
 
@@ -135,6 +135,8 @@ body {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 10;
+
 }
 .result_header {
   font-size: 2rem;
@@ -177,4 +179,18 @@ body {
 }
 .tooth:hover {
   fill: #d3d2d2;
+}
+
+.mysterycard_container {
+  z-index: -1;
+  border: solid;
+  position: fixed;
+  bottom: 0%;
+}
+
+
+.submitNumber{
+  z-index: 20;
+  position: fixed;
+  bottom: 9%;
 }
