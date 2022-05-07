@@ -127,7 +127,8 @@ io.sockets.on("connect", (socket) => {
   });
 
   socket.on("startPressed", (data) => {
-    if (io.engine.clientsCount == connectionsLimit) {
+    if (io.sockets.adapter.rooms.get(data.room).size == connectionsLimit) {
+      // if (io.engine.clientsCount == connectionsLimit) {
       socket.roomName = data.room;
       console.log("press clicked");
       io.to(socket.roomName).emit("gameStart");
@@ -139,12 +140,8 @@ io.sockets.on("connect", (socket) => {
       if (users[socket.roomName]) {
         users[socket.roomName].push(socket.name);
       } else {
-        users[socket.roomName] = [socket.name];
+        socket.emit("notenough");
       }
-      console.log("rooms: ", rooms);
-      console.log("is for game");
-    } else {
-      socket.emit("notenough");
     }
   });
 
