@@ -30,8 +30,8 @@ body {
   display: flex;
   justify-content: center;
   font-family: "Inter";
-  width: 12.5vw;
-  height: 25vh;
+  width: 15vw;
+  height: 27.5vh;
   background-color: rgba(244, 244, 244, 0.3);
 }
 .aliveDiv {
@@ -41,14 +41,19 @@ body {
 .turnContainer {
   right: 2.5%;
   top: 5%;
+  background-color: rgba(244, 244, 244, 0.3);
+  font-family: "Joti One", cursive;
 }
 .playerImg {
   width: 60%;
   height: auto;
 }
-
+.aliveHeader {
+  font-family: "Joti One", cursive;
+}
 .playerAliveDiv {
-  line-height: 1.5rem;
+  line-height: 2rem;
+  text-align: center;
 }
 .opacityOverlay h3 {
   /* margin-top: 5%; */
@@ -199,8 +204,7 @@ body {
   bottom: 0%;
 }
 
-
-.submitNumber{
+.submitNumber {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -221,5 +225,4 @@ body {
   width: 100px;
 
   padding: 10px;
-
 }

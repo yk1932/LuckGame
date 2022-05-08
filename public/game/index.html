@@ -23,19 +23,19 @@
     <img id="lobby_wall" class="lobby_wall" src="../images/lobbyWall.png" />
 
     <div id="dark_layer" class="dark_layer none"></div>
-    <div class="aliveDiv opacityOverlay" id="aliveDiv">
-      <h3>Who's Still Alive</h3>
+    <div class="aliveDiv opacityOverlay none" id="aliveDiv">
+      <h3 class="aliveHeader">Who's still alive?</h3>
       <div class="playerAliveDiv">
-        <h4 id="player1">USER A</h4>
-        <h4 id="player2">USER B</h4>
-        <h4 id="player3">USER C</h4>
-        <h4 id="player4">USER D</h4>
+        <h4 id="player1">Orange Mokoko</h4>
+        <h4 id="player2">Pink Mokoko</h4>
+        <h4 id="player3">Green Mokoko</h4>
+        <h4 id="player4">Purple Mokoko</h4>
       </div>
     </div>
 
-    <div class="turnContainer opacityOverlay" id="turnContainer">
-      <h3>[Player] Turn</h3>
-      <img class="playerImg" src="../images/orangeMokoko.png" />
+    <div class="turnContainer opacityOverlay none" id="turnContainer">
+      <h3 id="turnText">[Player] Turn</h3>
+      <img class="playerImg" src="../images/emptyMokoko.png" />
     </div>
     <h2 class="reset_header"></h2>
     <button class="return_button none">Return</button>
@@ -554,7 +554,10 @@
         </defs>
       </svg>
 
-      <div class="mysterycard_container none pointerNone" id="mysterycard_container">
+      <div
+        class="mysterycard_container none pointerNone"
+        id="mysterycard_container"
+      >
         <img
           id="card"
           class="chalice"
@@ -564,10 +567,21 @@
       </div>
 
       <div class="submitNumber none pointerNone" id="submitNumber">
-        <input class="insert_number" id="insert_number" type="text" id="lname" name="lname" placeholder="insert a number between 1-100"><br><br>
-        <input class="submit_number" id="submit_number" type="submit" value="Submit">
+        <input
+          class="insert_number"
+          id="insert_number"
+          type="text"
+          id="lname"
+          name="lname"
+          placeholder="insert a number between 1-100"
+        /><br /><br />
+        <input
+          class="submit_number"
+          id="submit_number"
+          type="submit"
+          value="Submit"
+        />
       </div>
-      
     </section>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="game.js"></script>
