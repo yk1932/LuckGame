@@ -24,6 +24,7 @@ const randomize = (totalNum) => {
 
 //randomize the initial numbers that we use for each game
 let doorNum = randomize(4);
+console.log("door num!!", doorNum);
 let toothNum = randomize(13);
 let chaliceNum = randomize(3);
 let mysteryNum = randomize(100);
@@ -93,12 +94,14 @@ io.sockets.on("connect", (socket) => {
     if (users[socket.roomName]) {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName].push(playerInfo);
     } else {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName] = [playerInfo];
@@ -130,22 +133,33 @@ io.sockets.on("connect", (socket) => {
     if (users[socket.roomName]) {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName].push(playerInfo);
     } else {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName] = [playerInfo];
     }
     //getting next player and sending signal
+
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (players[currentTurn] == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data", playerIDturn);
+      }
+    }
     let turnData = {
       name: players[currentTurn],
+      playerID: playerIDturn,
     };
+    console.log("real turn data", turnData);
     io.to(socket.roomName).emit("playerTurn", turnData);
-
   });
 
   socket.on("startPressed", (data) => {
@@ -204,20 +218,39 @@ io.sockets.on("connect", (socket) => {
       turn = currentTurn % players.length;
       console.log(currentTurn, players.length, "ioufhdsiufhdsiufhdisuhf");
       console.log("!!! turn", turn);
-      let nextPlayer = {
-        name: players[turn],
-      };
-      console.log(nextPlayer);
+      // let nextPlayer = {
+      //   name: players[turn],
+      // };
       console.log(socket.roomName);
-      io.to(socket.roomName).emit("playerTurn", nextPlayer);
+      let playerIDturn;
+      for (let i = 0; i < users[socket.roomName].length; i++) {
+        if (players[turn] == users[socket.roomName][i].name) {
+          playerIDturn = users[socket.roomName][i].playerID;
+          console.log("turn data", playerIDturn);
+        }
+      }
+      let turnData = {
+        name: players[turn],
+        playerID: playerIDturn,
+      };
+      io.to(socket.roomName).emit("playerTurn", turnData);
     }
     //shjowing all results to the players
     console.log(users[socket.roomName]);
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (socket.name == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data", playerIDturn);
+      }
+    }
     let player = {
       player: socket.name,
       result: playerStatus,
       door: data.guess,
+      playerID: playerIDturn,
     };
+    console.log("player!!!", player);
     socket.emit("yourResult", player);
     socket.to(socket.roomName).emit("playerResult", player);
     doorGuessNum++;
@@ -241,8 +274,19 @@ io.sockets.on("connect", (socket) => {
   //actually beginning game 2 and signalling to players to start their turn
   //similar to code above
   socket.on("beginLevelTwo", () => {
+    // let turnData = {
+    //   name: players[turn],
+    // };
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (players[turn] == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data", playerIDturn);
+      }
+    }
     let turnData = {
-      name: players[turn],
+      name: players[currentTurn],
+      playerID: playerIDturn,
     };
     io.to(socket.roomName).emit("playerTurn", turnData);
   });
@@ -267,15 +311,34 @@ io.sockets.on("connect", (socket) => {
     } else {
       currentTurn++;
       turn = currentTurn % players.length;
-      let nextPlayer = {
-        name: players[turn],
+      // let nextPlayer = {
+      //   name: players[turn],
+      // };
+      let playerIDturn;
+      for (let i = 0; i < users[socket.roomName].length; i++) {
+        if (players[turn] == users[socket.roomName][i].name) {
+          playerIDturn = users[socket.roomName][i].playerID;
+          console.log("turn data", playerIDturn);
+        }
+      }
+      let turnData = {
+        name: players[currentTurn],
+        playerID: playerIDturn,
       };
-      io.to(socket.roomName).emit("playerTurn", nextPlayer);
+      io.to(socket.roomName).emit("playerTurn", turnData);
+    }
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (socket.name == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data", playerIDturn);
+      }
     }
     let player = {
       player: socket.name,
       result: playerStatus,
       chalice: data.guess,
+      playerID: playerIDturn,
     };
     socket.emit("yourChaliceResult", player);
     socket.to(socket.roomName).emit("playerChaliceResult", player);
@@ -322,17 +385,34 @@ io.sockets.on("connect", (socket) => {
       turn = currentTurn % players.length;
       console.log(currentTurn, players.length, "ioufhdsiufhdsiufhdisuhf");
       console.log("!!! turn", turn);
-      let nextPlayer = {
-        name: players[turn],
+      // let nextPlayer = {
+      //   name: players[turn],
+      // };
+      let playerIDturn;
+      for (let i = 0; i < users[socket.roomName].length; i++) {
+        if (players[turn] == users[socket.roomName][i].name) {
+          playerIDturn = users[socket.roomName][i].playerID;
+          console.log("turn data", playerIDturn);
+        }
+      }
+      let turnData = {
+        name: players[currentTurn],
+        playerID: playerIDturn,
       };
-      console.log(nextPlayer);
-      console.log(socket.roomName);
-      io.to(socket.roomName).emit("playerTurn", nextPlayer);
+      io.to(socket.roomName).emit("playerTurn", turnData);
+    }
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (socket.name == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data", playerIDturn);
+      }
     }
     let player = {
       player: socket.name,
       result: playerStatus,
       tooth: data.guess,
+      playerID: playerIDturn,
     };
     socket.emit("yourToothResult", player);
     socket.to(socket.roomName).emit("playerToothResult", player);
@@ -344,13 +424,18 @@ io.sockets.on("connect", (socket) => {
     io.to(socket.roomName).emit("levelFourStart");
   });
 
+<<<<<<< HEAD
   let guessedUsers = [] ;
+=======
+
+>>>>>>> d6d2e80d4e23a664b17dbae7a97eb0deee581368
 
   socket.on("numberGuessed", (data) => {
     socket.roomName = data.room;
     console.log(mysteryNum);
     console.log(data);
     console.log("WHY ISNT THIS RECEIVING WHAT");
+
     if (data.guess < mysteryNum) {
       console.log("Guess higher!!");
       io.to(socket.roomName).emit("higher");
