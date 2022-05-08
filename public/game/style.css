@@ -21,27 +21,29 @@ body {
 }
 .opacityOverlay {
   position: absolute;
-  display: flex;
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
   border-radius: 1rem;
   border: 0.6rem solid white;
-
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-family: "Inter";
   width: 12.5vw;
-  height: 20vh;
+  height: 25vh;
   background-color: rgba(244, 244, 244, 0.3);
 }
 .aliveDiv {
-  left: 2%;
-  top: 2%;
+  left: 2.5%;
+  top: 5%;
 }
 .turnContainer {
-  right: 2%;
-  top: 2%;
+  right: 2.5%;
+  top: 5%;
 }
 .playerImg {
-  width: 50%;
+  width: 60%;
   height: auto;
 }
 
@@ -49,7 +51,7 @@ body {
   line-height: 1.5rem;
 }
 .opacityOverlay h3 {
-  margin-top: 5%;
+  /* margin-top: 5%; */
   margin-bottom: 5%;
 }
 .door_container {

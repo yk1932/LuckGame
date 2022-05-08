@@ -1,3 +1,10 @@
+mokokoName = ["Orange Mokoko", "Pink Mokoko", "Green Mokoko", "Purple Mokoko"];
+mokokoImageSrc = [
+  "../images/orangeMokoko.png",
+  "../images/pinkMokoko.png",
+  "../images/greenMokoko.png",
+  "../images/purpleMokoko.png",
+];
 const app = {
   initialize: () => {
     // const randomRoom = app.generateCode();
@@ -7,8 +14,31 @@ const app = {
     } else {
       randomRoom = sessionStorage.getItem("room");
     }
+    let randomName;
+    let playerID;
+    let socket = io();
+    socket.on("connect", () => {
+      let roomData = {
+        room: randomRoom,
+      };
+      socket.emit("checkPlayerCount", roomData);
+      console.log("just sent!!!");
+      console.log("connected to server");
+      socket.on("yourPlayerNum", (data) => {
+        console.log("THE NEW DATA", data);
+        console.log("data num", data.playerNum);
+        randomName = mokokoName[parseInt(data.playerNum)];
+        playerID = data.playerNum;
+        let roomData = {
+          name: randomName,
+          room: randomRoom,
+          playerID: data.playerNum,
+        };
+        socket.emit("userData", roomData);
+      });
+    });
     console.log(randomRoom);
-    randomName = app.generateName();
+
     console.log(randomName);
 
     const codeText = document.getElementById("code_text");
@@ -33,35 +63,36 @@ const app = {
       console.log("window.location");
     });
 
-    let socket = io();
-    socket.on("connect", () => {
-      console.log("connected to server");
-      let data = {
-        name: randomName,
-        room: randomRoom,
-      };
-      socket.emit("userData", data);
-    });
-
     //loading players in lobby
     socket.on("loadPlayers", (data) => {
-      while (playersContainer.firstChild) {
-        playersContainer.removeChild(playersContainer.lastChild);
-      }
+      // while (playersContainer.firstChild) {
+      //   playersContainer.removeChild(playersContainer.lastChild);
+      // }
       console.log(data);
       console.log(data[0].name);
       for (let i = 0; i < data.length; i++) {
-        let newDiv = document.createElement("div");
-        console.log("in this loop", randomName, data[i].name);
+        let tempHeader = "player" + String(i + 1) + "Header";
+        let tempImg = "player" + String(i + 1);
+        let tempStar = "player" + String(i + 1) + "star";
+        console.log("TEMP HEADER", tempHeader);
+        // let playerHeader = document.getElementById(tempHeader);
+        let playerHeader = document.getElementById(tempHeader);
+        let playerImg = document.getElementById(tempImg);
+        let playerStar = document.getElementById(tempStar);
+        console.log("the player hegader", playerHeader);
+        playerHeader.innerHTML = mokokoName[i];
+        playerImg.src = mokokoImageSrc[i];
+        // let newContainer = document.createElement("div");
+        // let newPlayerHeader = document.createElement("h3");
+        // console.log("in this loop", randomName, data[i].name);
         if (randomName == data[i].name) {
-          newDiv.innerHTML = `★ ${data[i].name}`;
-        } else {
-          newDiv.innerHTML = `   ${data[i].name}`;
+          playerStar.classList.remove("none");
         }
-        newDiv.classList.add("player_container");
-        playersContainer.appendChild(newDiv);
+        // newContainer.classList.add("player_container");
+        // newContainer.appendChild(newPlayerHeader);
+        // playersContainer.appendChild(newContainer);
 
-        console.log(data[i]);
+        // console.log(data[i]);
       }
     });
     socket.on("err", () => {
@@ -78,6 +109,7 @@ const app = {
       console.log("game starting");
       sessionStorage.setItem("name", randomName);
       sessionStorage.setItem("room", randomRoom);
+      sessionStorage.setItem("playerID", playerID);
 
       window.location = "../game";
     });
