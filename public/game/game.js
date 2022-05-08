@@ -3,7 +3,9 @@ const app = {
   gameLength: document.querySelectorAll(".door").length,
   gameContainer: document.querySelector(".game_container"),
   returnButton: document.querySelector(".return_button"),
+  tabName: document.getElementById("tabname"),
   initialize: () => {
+    app.tabName.innerText = sessionStorage.getItem("name");
     app.turnHeader.classList.remove("none");
     app.turnHeader.innerText = "Level One";
     app.returnButton.addEventListener("click", () => {
