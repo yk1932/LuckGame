@@ -19,26 +19,35 @@ body {
   height: 100vh;
 }
 
-.players_container {
-  /* width: 60%;
-  height: 50%;
-  background-color: white;
+.player_container {
   display: flex;
-  flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
+
 .players_container {
   color: white;
   padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: space-evenly;
+  flex-direction: row;
   line-height: 2em;
   width: 70%;
   height: 40%;
   background-color: rgba(158, 98, 138, 0.529);
   border-radius: 30px;
   margin: 30px;
+  font-family: "Joti One", cursive;
+}
+.mokokoImg {
+  width: 7.5vw;
+  margin-bottom: 15%;
+  height: auto;
+}
+.playerStar {
+  margin-bottom: 15%;
 }
 .landing_header {
   letter-spacing: 0.15em;
@@ -120,4 +129,8 @@ p {
   .sub-container {
     width: 75%;
   }
+}
+
+.none {
+  opacity: 0;
 }
