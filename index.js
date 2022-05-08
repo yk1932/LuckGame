@@ -46,6 +46,26 @@ io.on("connection", function (socket) {
 
 io.sockets.on("connect", (socket) => {
   console.log("wheee", socket.id);
+  socket.on("checkPlayerCount", (data) => {
+    console.log("THE ID", socket.id);
+    console.log(data);
+    socket.roomName = data.room;
+    let playerNumData;
+    if (!io.sockets.adapter.rooms.get(socket.roomName)) {
+      console.log("UNFEDINFE DBRSOKSIIII");
+      playerNumData = {
+        playerNum: 0,
+      };
+    } else {
+      console.log("not undefiend");
+      playerNum = io.sockets.adapter.rooms.get(socket.roomName).size;
+      playerNumData = {
+        playerNum: playerNum,
+      };
+    }
+    console.log("THE NEW DAA", playerNumData);
+    socket.emit("yourPlayerNum", playerNumData);
+  });
 
   //sending user data
   socket.on("userData", (data) => {
