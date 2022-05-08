@@ -4,8 +4,21 @@ const app = {
   gameContainer: document.querySelector(".game_container"),
   returnButton: document.querySelector(".return_button"),
   tabName: document.getElementById("tabname"),
+  tabIcon: document.getElementById("tabicon"),
   initialize: () => {
     app.tabName.innerText = sessionStorage.getItem("name");
+    if (app.tabName.innerText == "Orange Mokoko") {
+      app.tabIcon.href = "../images/orangeMokoko.png";
+    } 
+    else if (app.tabName.innerText == "Pink Mokoko") {
+      app.tabIcon.href = "../images/pinkMokoko.png";
+    } 
+    else if (app.tabName.innerText == "Green Mokoko") {
+      app.tabIcon.href = "../images/greenMokoko.png";
+    } 
+    else if (app.tabName.innerText == "Purple Mokoko") {
+      app.tabIcon.href = "../images/purpleMokoko.png";
+    } 
     app.turnHeader.classList.remove("none");
     app.turnHeader.innerText = "Level One";
     app.returnButton.addEventListener("click", () => {
