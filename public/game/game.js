@@ -378,7 +378,10 @@ const app = {
           app.turnHeader.innerText = "Level Four";
 
           //ADD ITEMS FOR LEVEL FOUR HERE
-          document.getElementById("mysterycard_container").classList.remove("none"); 
+          app.gameContainer.classList.remove("pointerNone");
+          document.getElementById("mysterycard_container").classList.remove("none");
+          document.getElementById("mysterycard_container").classList.remove("pointerNone"); 
+
         }, 1000);
 
         setTimeout(() => {
@@ -387,12 +390,25 @@ const app = {
 
         setTimeout(() => {
           document.getElementById("dark_layer").classList.add("none"); 
+          
           app.turnHeader.classList.add("none");
           // document.getElementById("mysterycard_container").classList.add("none"); 
           document.getElementById("card").src = "../images/takeyourguess.png";
           document.getElementById("submitNumber").classList.remove("none"); 
+          document.getElementById("submitNumber").classList.remove("pointerNone"); 
 
+          document.getElementById("submit_number").addEventListener("click", (e) => {
+            answer = document.getElementById("insert_number").value;
+            console.log(answer);
+            data = {
+              room: sessionStorage.getItem("room"),
+              guess: answer
+            };
+            socket.emit("numberGuessed", data);
+            // socket.emit("numberGuessed");
+            console.log("answer sent",data);
 
+          });
         }, 7000);
        
         // setTimeout(() => {

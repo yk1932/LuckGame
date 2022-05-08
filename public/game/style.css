@@ -190,7 +190,25 @@ body {
 
 
 .submitNumber{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   z-index: 20;
   position: fixed;
   bottom: 9%;
+}
+
+.insert_number {
+  border-radius: 20px;
+  width: 250px;
+  padding: 10px;
+}
+
+.submit_number {
+  border-radius: 20px;
+  width: 100px;
+
+  padding: 10px;
+
 }

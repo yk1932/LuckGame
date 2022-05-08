@@ -26,6 +26,7 @@ const randomize = (totalNum) => {
 let doorNum = randomize(4);
 let toothNum = randomize(13);
 let chaliceNum = randomize(3);
+let mysteryNum = randomize(100);
 
 //Initialize socket.io
 let io = require("socket.io");
@@ -322,6 +323,22 @@ io.sockets.on("connect", (socket) => {
     console.log("123123", players[turn], turn);
     io.to(socket.roomName).emit("levelFourStart");
   });
+
+// let submissionNumber = 4;
+
+  socket.on("numberGuessed", (data) => {
+    console.log(data);
+    console.log("WHY ISNT THIS RECEIVING WHAT");
+    if (data.guess == mysteryNum) {
+      console.log("CORRECT");
+    }else {console.log("WRONG");}
+  });
+
+  // socket.on("numberGuessed", () => {
+    
+  //   console.log("WHY ISNT THIS RECEIVING WHAT");
+    
+  // });
 
   socket.on("disconnect", () => {
     console.log("connection ended", socket.id);
