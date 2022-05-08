@@ -421,24 +421,37 @@ const app = {
             };
             socket.emit("numberGuessed", data);
             console.log("answer sent",data);
-
           });
         }, 7000);
-       
-        // setTimeout(() => {
-        //   app.turnHeader.innerText = "Clean the crocodile's teeth";
-        // }, 3500);
-
-        // setTimeout(() => {
-        //   app.turnHeader.innerText = "(without angering it!)";
-        // }, 5000);
-
-        // setTimeout(() => {
-        //   app.turnHeader.classList.add("none");
-        //   socket.emit("beginLevelThree");
-        // }, 6000);
-
       });
+      let clueHeader = document.getElementById("clue_header");
+      socket.on("higher", () => {
+        clueHeader.classList.remove("none");
+        clueHeader.style.color = "orange";
+        clueHeader.innerText = "Higher";
+        setTimeout(() => {
+          clueHeader.classList.add("none");
+        }, 1000);
+
+      })
+
+      socket.on("lower", () => {
+        clueHeader.classList.remove("none");
+        clueHeader.style.color = "gray";
+        clueHeader.innerText = "Lower";
+        setTimeout(() => {
+          clueHeader.classList.add("none");
+        }, 1000);
+      })
+
+      socket.on("correctnumber", () => {
+        clueHeader.classList.remove("none");
+        clueHeader.style.color = "green";
+        clueHeader.innerText = "Correct";
+        setTimeout(() => {
+          clueHeader.classList.add("none");
+        }, 1000);
+      })
 
       let teeth = document.querySelectorAll(".tooth");
 
