@@ -396,16 +396,15 @@ const app = {
           document.getElementById("card").src = "../images/takeyourguess.png";
           document.getElementById("submitNumber").classList.remove("none"); 
           document.getElementById("submitNumber").classList.remove("pointerNone"); 
-
           document.getElementById("submit_number").addEventListener("click", (e) => {
             answer = document.getElementById("insert_number").value;
             console.log(answer);
             data = {
               room: sessionStorage.getItem("room"),
+              name: sessionStorage.getItem("name"),
               guess: answer
             };
             socket.emit("numberGuessed", data);
-            // socket.emit("numberGuessed");
             console.log("answer sent",data);
 
           });

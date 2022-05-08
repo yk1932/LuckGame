@@ -327,6 +327,7 @@ io.sockets.on("connect", (socket) => {
 // let submissionNumber = 4;
 
   socket.on("numberGuessed", (data) => {
+    console.log(mysteryNum);
     console.log(data);
     console.log("WHY ISNT THIS RECEIVING WHAT");
     if (data.guess == mysteryNum) {
