@@ -3,30 +3,24 @@ const app = {
   gameLength: document.querySelectorAll(".door").length,
   gameContainer: document.querySelector(".game_container"),
   returnButton: document.querySelector(".return_button"),
-  aliveDiv: document.querySelector(".aliveDiv"),
-  turnContainer: document.querySelector(".turnContainer"),
-  playerImg: document.querySelector(".playerImg"),
-  turnText: document.getElementById("turnText"),
-  mokokoName: ["Orange Mokoko", "Pink Mokoko", "Green Mokoko", "Purple Mokoko"],
-  mokokoImageSrc: [
-    "../images/orangeMokoko.png",
-    "../images/pinkMokoko.png",
-    "../images/greenMokoko.png",
-    "../images/purpleMokoko.png",
-  ],
-  sadMokokoImageSrc: [
-    "../images/sadOrangeMokoko.png",
-    "../images/sadPinkMokoko.png",
-    "../images/sadGreenMokoko.png",
-    "../images/sadPurpleMokoko.png",
-  ],
-  happyMokokoImageSrc: [
-    "../images/happyOrangeMokoko.png",
-    "../images/happyPinkMokoko.png",
-    "../images/happyGreenMokoko.png",
-    "../images/happyPurpleMokoko.png",
-  ],
+
+
+  tabName: document.getElementById("tabname"),
+  tabIcon: document.getElementById("tabicon"),
   initialize: () => {
+    app.tabName.innerText = sessionStorage.getItem("name");
+    if (app.tabName.innerText == "Orange Mokoko") {
+      app.tabIcon.href = "../images/orangeMokoko.png";
+    } 
+    else if (app.tabName.innerText == "Pink Mokoko") {
+      app.tabIcon.href = "../images/pinkMokoko.png";
+    } 
+    else if (app.tabName.innerText == "Green Mokoko") {
+      app.tabIcon.href = "../images/greenMokoko.png";
+    } 
+    else if (app.tabName.innerText == "Purple Mokoko") {
+      app.tabIcon.href = "../images/purpleMokoko.png";
+    } 
     app.turnHeader.classList.remove("none");
     app.turnHeader.innerText = "Level One";
     app.returnButton.addEventListener("click", () => {
@@ -443,39 +437,51 @@ const app = {
           app.turnHeader.classList.add("none");
           // document.getElementById("mysterycard_container").classList.add("none");
           document.getElementById("card").src = "../images/takeyourguess.png";
-          document.getElementById("submitNumber").classList.remove("none");
-          document
-            .getElementById("submitNumber")
-            .classList.remove("pointerNone");
 
-          document
-            .getElementById("submit_number")
-            .addEventListener("click", (e) => {
-              answer = document.getElementById("insert_number").value;
-              console.log(answer);
-              data = {
-                room: sessionStorage.getItem("room"),
-                guess: answer,
-              };
-              socket.emit("numberGuessed", data);
-              // socket.emit("numberGuessed");
-              console.log("answer sent", data);
-            });
+          document.getElementById("submitNumber").classList.remove("none"); 
+          document.getElementById("submitNumber").classList.remove("pointerNone"); 
+          document.getElementById("submit_number").addEventListener("click", (e) => {
+            answer = document.getElementById("insert_number").value;
+            console.log(answer);
+            data = {
+              room: sessionStorage.getItem("room"),
+              name: sessionStorage.getItem("name"),
+              guess: answer
+            };
+            socket.emit("numberGuessed", data);
+            console.log("answer sent",data);
+          });
         }, 7000);
-
-        // setTimeout(() => {
-        //   app.turnHeader.innerText = "Clean the crocodile's teeth";
-        // }, 3500);
-
-        // setTimeout(() => {
-        //   app.turnHeader.innerText = "(without angering it!)";
-        // }, 5000);
-
-        // setTimeout(() => {
-        //   app.turnHeader.classList.add("none");
-        //   socket.emit("beginLevelThree");
-        // }, 6000);
       });
+      let clueHeader = document.getElementById("clue_header");
+      socket.on("higher", () => {
+        clueHeader.classList.remove("none");
+        clueHeader.style.color = "orange";
+        clueHeader.innerText = "Higher";
+        setTimeout(() => {
+          clueHeader.classList.add("none");
+        }, 1000);
+
+      })
+
+
+      socket.on("lower", () => {
+        clueHeader.classList.remove("none");
+        clueHeader.style.color = "gray";
+        clueHeader.innerText = "Lower";
+        setTimeout(() => {
+          clueHeader.classList.add("none");
+        }, 1000);
+      })
+
+      socket.on("correctnumber", () => {
+        clueHeader.classList.remove("none");
+        clueHeader.style.color = "green";
+        clueHeader.innerText = "Correct";
+        setTimeout(() => {
+          clueHeader.classList.add("none");
+        }, 1000);
+      })
 
       let teeth = document.querySelectorAll(".tooth");
 

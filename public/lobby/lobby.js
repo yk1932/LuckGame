@@ -37,6 +37,7 @@ const app = {
         socket.emit("userData", roomData);
       });
     });
+
     console.log(randomRoom);
 
     console.log(randomName);
@@ -45,6 +46,8 @@ const app = {
     codeText.innerHTML = `Room ID: ${randomRoom}`;
     codeText.style.color = "white";
     const playersContainer = document.getElementById("players_container");
+
+    
 
     //sending signal when play button is pressed
     const playButton = document.getElementById("play_button");

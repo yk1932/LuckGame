@@ -424,23 +424,27 @@ io.sockets.on("connect", (socket) => {
     io.to(socket.roomName).emit("levelFourStart");
   });
 
-  // let submissionNumber = 4;
+
 
   socket.on("numberGuessed", (data) => {
+    socket.roomName = data.room;
+    console.log(mysteryNum);
     console.log(data);
     console.log("WHY ISNT THIS RECEIVING WHAT");
-    if (data.guess == mysteryNum) {
-      console.log("CORRECT");
-    } else {
-      console.log("WRONG");
+
+    if (data.guess < mysteryNum) {
+      console.log("Guess higher!!");
+      io.to(socket.roomName).emit("higher");
+    }
+    else if (data.guess > mysteryNum){
+      io.to(socket.roomName).emit("lower");
+      console.log("Guess Lower!!");
+    }
+    else if (data.guess == mysteryNum) {
+      io.to(socket.roomName).emit("correctnumber");
+      console.log("CORRECT WOOO");
     }
   });
-
-  // socket.on("numberGuessed", () => {
-
-  //   console.log("WHY ISNT THIS RECEIVING WHAT");
-
-  // });
 
   socket.on("disconnect", () => {
     console.log("connection ended", socket.id);
