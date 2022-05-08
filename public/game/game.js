@@ -3,7 +3,29 @@ const app = {
   gameLength: document.querySelectorAll(".door").length,
   gameContainer: document.querySelector(".game_container"),
   returnButton: document.querySelector(".return_button"),
-
+  aliveDiv: document.querySelector(".aliveDiv"),
+  turnContainer: document.querySelector(".turnContainer"),
+  playerImg: document.querySelector(".playerImg"),
+  turnText: document.getElementById("turnText"),
+  mokokoName: ["Orange Mokoko", "Pink Mokoko", "Green Mokoko", "Purple Mokoko"],
+  mokokoImageSrc: [
+    "../images/orangeMokoko.png",
+    "../images/pinkMokoko.png",
+    "../images/greenMokoko.png",
+    "../images/purpleMokoko.png",
+  ],
+  sadMokokoImageSrc: [
+    "../images/sadOrangeMokoko.png",
+    "../images/sadPinkMokoko.png",
+    "../images/sadGreenMokoko.png",
+    "../images/sadPurpleMokoko.png",
+  ],
+  happyMokokoImageSrc: [
+    "../images/happyOrangeMokoko.png",
+    "../images/happyPinkMokoko.png",
+    "../images/happyGreenMokoko.png",
+    "../images/happyPurpleMokoko.png",
+  ],
 
   tabName: document.getElementById("tabname"),
   tabIcon: document.getElementById("tabicon"),
@@ -11,16 +33,13 @@ const app = {
     app.tabName.innerText = sessionStorage.getItem("name");
     if (app.tabName.innerText == "Orange Mokoko") {
       app.tabIcon.href = "../images/orangeMokoko.png";
-    } 
-    else if (app.tabName.innerText == "Pink Mokoko") {
+    } else if (app.tabName.innerText == "Pink Mokoko") {
       app.tabIcon.href = "../images/pinkMokoko.png";
-    } 
-    else if (app.tabName.innerText == "Green Mokoko") {
+    } else if (app.tabName.innerText == "Green Mokoko") {
       app.tabIcon.href = "../images/greenMokoko.png";
-    } 
-    else if (app.tabName.innerText == "Purple Mokoko") {
+    } else if (app.tabName.innerText == "Purple Mokoko") {
       app.tabIcon.href = "../images/purpleMokoko.png";
-    } 
+    }
     app.turnHeader.classList.remove("none");
     app.turnHeader.innerText = "Level One";
     app.returnButton.addEventListener("click", () => {
@@ -438,19 +457,23 @@ const app = {
           // document.getElementById("mysterycard_container").classList.add("none");
           document.getElementById("card").src = "../images/takeyourguess.png";
 
-          document.getElementById("submitNumber").classList.remove("none"); 
-          document.getElementById("submitNumber").classList.remove("pointerNone"); 
-          document.getElementById("submit_number").addEventListener("click", (e) => {
-            answer = document.getElementById("insert_number").value;
-            console.log(answer);
-            data = {
-              room: sessionStorage.getItem("room"),
-              name: sessionStorage.getItem("name"),
-              guess: answer
-            };
-            socket.emit("numberGuessed", data);
-            console.log("answer sent",data);
-          });
+          document.getElementById("submitNumber").classList.remove("none");
+          document
+            .getElementById("submitNumber")
+            .classList.remove("pointerNone");
+          document
+            .getElementById("submit_number")
+            .addEventListener("click", (e) => {
+              answer = document.getElementById("insert_number").value;
+              console.log(answer);
+              data = {
+                room: sessionStorage.getItem("room"),
+                name: sessionStorage.getItem("name"),
+                guess: answer,
+              };
+              socket.emit("numberGuessed", data);
+              console.log("answer sent", data);
+            });
         }, 7000);
       });
       let clueHeader = document.getElementById("clue_header");
@@ -461,9 +484,7 @@ const app = {
         setTimeout(() => {
           clueHeader.classList.add("none");
         }, 1000);
-
-      })
-
+      });
 
       socket.on("lower", () => {
         clueHeader.classList.remove("none");
@@ -472,7 +493,7 @@ const app = {
         setTimeout(() => {
           clueHeader.classList.add("none");
         }, 1000);
-      })
+      });
 
       socket.on("correctnumber", () => {
         clueHeader.classList.remove("none");
@@ -481,7 +502,7 @@ const app = {
         setTimeout(() => {
           clueHeader.classList.add("none");
         }, 1000);
-      })
+      });
 
       let teeth = document.querySelectorAll(".tooth");
 
