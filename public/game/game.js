@@ -331,17 +331,101 @@ const app = {
         app.textDiv.classList.remove("none");
         // app.resultHeader.classList.remove("none");
       });
+
+      // May7 addition
+
+      // socket.on("gameOver4", (data) => {
+      //   setTimeout(() => {
+      //     app.turnHeader.innerText = `${data.name} won!!!`;
+      //     app.resultHeader.classList.add("none");
+      //     app.returnButton.classList.remove("none");
+      //   }, 1000);
+      // });
+
+      
       socket.on("gameOver3", (data) => {
-        //Remove all doors after 1 second of ending game
-
         setTimeout(() => {
-          //Remove doors
-
           app.turnHeader.innerText = `${data.name} won!!!`;
           app.resultHeader.classList.add("none");
-          app.returnButton.classList.remove("none");
+          // app.returnButton.classList.remove("none");
         }, 1000);
+
+        setTimeout(() => {
+          //Remove  ui and text
+          // text
+          app.turnHeader.innerText = `${data.name} won!!!`;
+        }, 2000);
+
+        setTimeout(() => {
+          app.turnHeader.classList.add("none");
+          socket.emit("levelFour");
+        }, 3500);
+
       });
+
+      socket.on("levelFourStart", () => {
+        setTimeout(() => {
+          app.turnHeader.classList.remove("none");
+          document.getElementById("dark_layer").classList.remove("none"); 
+          app.turnHeader.innerText = "Level Four";
+
+          //REMOVE ITEMS FROM LEVEL THREE HERE
+          document.getElementById("aliveDiv").classList.add("none"); 
+          document.getElementById("turnContainer").classList.add("none"); 
+          document.getElementById("crocodileClosed").classList.add("none"); 
+          document.body.style.backgroundColor = "#595959";
+          document.getElementById("lobby_wall").src = "../images/lobbyWall4.png";
+          app.turnHeader.innerText = "Level Four";
+
+          //ADD ITEMS FOR LEVEL FOUR HERE
+          app.gameContainer.classList.remove("pointerNone");
+          document.getElementById("mysterycard_container").classList.remove("none");
+          document.getElementById("mysterycard_container").classList.remove("pointerNone"); 
+
+        }, 1000);
+
+        setTimeout(() => {
+          app.turnHeader.innerText = "Guess the Mystery Number";
+        }, 3500);
+
+        setTimeout(() => {
+          document.getElementById("dark_layer").classList.add("none"); 
+          
+          app.turnHeader.classList.add("none");
+          // document.getElementById("mysterycard_container").classList.add("none"); 
+          document.getElementById("card").src = "../images/takeyourguess.png";
+          document.getElementById("submitNumber").classList.remove("none"); 
+          document.getElementById("submitNumber").classList.remove("pointerNone"); 
+
+          document.getElementById("submit_number").addEventListener("click", (e) => {
+            answer = document.getElementById("insert_number").value;
+            console.log(answer);
+            data = {
+              room: sessionStorage.getItem("room"),
+              guess: answer
+            };
+            socket.emit("numberGuessed", data);
+            // socket.emit("numberGuessed");
+            console.log("answer sent",data);
+
+          });
+        }, 7000);
+       
+        // setTimeout(() => {
+        //   app.turnHeader.innerText = "Clean the crocodile's teeth";
+        // }, 3500);
+
+        // setTimeout(() => {
+        //   app.turnHeader.innerText = "(without angering it!)";
+        // }, 5000);
+
+        // setTimeout(() => {
+        //   app.turnHeader.classList.add("none");
+        //   socket.emit("beginLevelThree");
+        // }, 6000);
+
+      });
+
       let teeth = document.querySelectorAll(".tooth");
 
       for (let i = 0; i < teeth.length; i++) {
