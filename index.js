@@ -424,12 +424,6 @@ io.sockets.on("connect", (socket) => {
     io.to(socket.roomName).emit("levelFourStart");
   });
 
-<<<<<<< HEAD
-  let guessedUsers = [] ;
-=======
-
->>>>>>> d6d2e80d4e23a664b17dbae7a97eb0deee581368
-
   socket.on("numberGuessed", (data) => {
     socket.roomName = data.room;
     console.log(mysteryNum);
@@ -439,21 +433,19 @@ io.sockets.on("connect", (socket) => {
     if (data.guess < mysteryNum) {
       console.log("Guess higher!!");
       io.to(socket.roomName).emit("higher");
-    }
-    else if (data.guess > mysteryNum){
+    } else if (data.guess > mysteryNum) {
       io.to(socket.roomName).emit("lower");
       console.log("Guess Lower!!");
-    }
-    else if (data.guess == mysteryNum) {
+    } else if (data.guess == mysteryNum) {
       io.to(socket.roomName).emit("correctnumber");
       console.log("CORRECT WOOO");
       let guessedPlayer = {
-        name: socket.name      
+        name: socket.name,
       };
       guessedUsers.push(guessedPlayer);
-      console.log("Guessed Users"+guessedUsers[0]);
-      console.log("Guessed Users Length"+guessedUsers.length);
-      io.to(socket.roomName).emit("userGuessedIt",guessedPlayer);
+      console.log("Guessed Users" + guessedUsers[0]);
+      console.log("Guessed Users Length" + guessedUsers.length);
+      io.to(socket.roomName).emit("userGuessedIt", guessedPlayer);
     }
   });
 

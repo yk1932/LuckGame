@@ -456,23 +456,6 @@ const app = {
           app.turnHeader.classList.add("none");
           // document.getElementById("mysterycard_container").classList.add("none");
           document.getElementById("card").src = "../images/takeyourguess.png";
-<<<<<<< HEAD
-          document.getElementById("submitNumber").classList.remove("none"); 
-          document.getElementById("leaderboard").classList.remove("none"); 
-
-          document.getElementById("submitNumber").classList.remove("pointerNone"); 
-          document.getElementById("submit_number").addEventListener("click", (e) => {
-            answer = document.getElementById("insert_number").value;
-            console.log(answer);
-            data = {
-              room: sessionStorage.getItem("room"),
-              name: sessionStorage.getItem("name"),
-              guess: answer
-            };
-            socket.emit("numberGuessed", data);
-            console.log("answer sent",data);
-          });
-=======
 
           document.getElementById("submitNumber").classList.remove("none");
           document
@@ -491,7 +474,6 @@ const app = {
               socket.emit("numberGuessed", data);
               console.log("answer sent", data);
             });
->>>>>>> d6d2e80d4e23a664b17dbae7a97eb0deee581368
         }, 7000);
       });
       let clueHeader = document.getElementById("clue_header");
@@ -538,33 +520,37 @@ const app = {
         // console.log("guessed Users"+ guessedUsers);
         // console.log("guessed Users Length"+ guessedUsers.length);
 
-        if (data.name == "Pink Mokoko"){
-          document.getElementById("player1Img").src = "../images/pinkMokoko.png"; 
-        } 
-        else if (data.name == "Orange Mokoko"){
-          document.getElementById("player2Img").src = "../images/orangeMokoko.png"; 
-        }
-        else if (data.name == "Green Mokoko"){
-          document.getElementById("player3Img").src = "../images/greenMokoko.png"; 
-        }
-        else if (data.name == "Purple Mokoko"){
-          document.getElementById("player4Img").src = "../images/purpleMokoko.png"; 
+        if (data.name == "Pink Mokoko") {
+          document.getElementById("player1Img").src =
+            "../images/pinkMokoko.png";
+        } else if (data.name == "Orange Mokoko") {
+          document.getElementById("player2Img").src =
+            "../images/orangeMokoko.png";
+        } else if (data.name == "Green Mokoko") {
+          document.getElementById("player3Img").src =
+            "../images/greenMokoko.png";
+        } else if (data.name == "Purple Mokoko") {
+          document.getElementById("player4Img").src =
+            "../images/purpleMokoko.png";
         }
 
-        if ((document.getElementById("player1Img").src != "../images/emptyMokoko.png")&&
-        (document.getElementById("player2Img").src != "../images/emptyMokoko.png")&&
-        (document.getElementById("player3Img").src != "../images/emptyMokoko.png")&&
-        (document.getElementById("player4Img").src != "../images/emptyMokoko.png")){
-        console.log("EVERYTHING IS FILLED HEY");
-        socket.emit("gameOver4");
+        if (
+          document.getElementById("player1Img").src !=
+            "../images/emptyMokoko.png" &&
+          document.getElementById("player2Img").src !=
+            "../images/emptyMokoko.png" &&
+          document.getElementById("player3Img").src !=
+            "../images/emptyMokoko.png" &&
+          document.getElementById("player4Img").src !=
+            "../images/emptyMokoko.png"
+        ) {
+          console.log("EVERYTHING IS FILLED HEY");
+          socket.emit("gameOver4");
         }
         setTimeout(() => {
           app.turnHeader.classList.add("none");
         }, 2000);
-      })
-
-
-      
+      });
 
       let teeth = document.querySelectorAll(".tooth");
 
