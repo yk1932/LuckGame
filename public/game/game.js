@@ -3,6 +3,30 @@ const app = {
   gameLength: document.querySelectorAll(".door").length,
   gameContainer: document.querySelector(".game_container"),
   returnButton: document.querySelector(".return_button"),
+  aliveDiv: document.querySelector(".aliveDiv"),
+  turnContainer: document.querySelector(".turnContainer"),
+  playerImg: document.querySelector(".playerImg"),
+  turnText: document.getElementById("turnText"),
+  mokokoName: ["Orange Mokoko", "Pink Mokoko", "Green Mokoko", "Purple Mokoko"],
+  mokokoImageSrc: [
+    "../images/orangeMokoko.png",
+    "../images/pinkMokoko.png",
+    "../images/greenMokoko.png",
+    "../images/purpleMokoko.png",
+  ],
+  sadMokokoImageSrc: [
+    "../images/sadOrangeMokoko.png",
+    "../images/sadPinkMokoko.png",
+    "../images/sadGreenMokoko.png",
+    "../images/sadPurpleMokoko.png",
+  ],
+  happyMokokoImageSrc: [
+    "../images/happyOrangeMokoko.png",
+    "../images/happyPinkMokoko.png",
+    "../images/happyGreenMokoko.png",
+    "../images/happyPurpleMokoko.png",
+  ],
+
   tabName: document.getElementById("tabname"),
   tabIcon: document.getElementById("tabicon"),
   initialize: () => {

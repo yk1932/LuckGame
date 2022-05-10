@@ -349,8 +349,6 @@ io.sockets.on("connect", (socket) => {
     io.to(socket.roomName).emit("levelFourStart");
   });
 
-
-
   socket.on("numberGuessed", (data) => {
     socket.roomName = data.room;
     console.log(mysteryNum);
@@ -367,7 +365,7 @@ io.sockets.on("connect", (socket) => {
     else if (data.guess == mysteryNum) {
 
       let guessedPlayer = {
-        name: socket.name      
+        name: socket.name,
       };
 
       console.log("NAME OF GUESSED PLAYER",socket.name);
@@ -441,7 +439,6 @@ io.sockets.on("connect", (socket) => {
       }
       
       io.to(socket.roomName).emit("userGuessedIt",guessedPlayer);
-
     }
   });
 
