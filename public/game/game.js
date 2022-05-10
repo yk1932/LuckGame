@@ -3,47 +3,22 @@ const app = {
   gameLength: document.querySelectorAll(".door").length,
   gameContainer: document.querySelector(".game_container"),
   returnButton: document.querySelector(".return_button"),
-  randomNum: 0,
-  gameLength: document.querySelectorAll(".door").length,
-  gameContainer: document.querySelector(".game_container"),
-  returnButton: document.querySelector(".return_button"),
-  aliveDiv: document.querySelector(".aliveDiv"),
-  turnContainer: document.querySelector(".turnContainer"),
-  playerImg: document.querySelector(".playerImg"),
-  turnText: document.getElementById("turnText"),
-  mokokoName: ["Orange Mokoko", "Pink Mokoko", "Green Mokoko", "Purple Mokoko"],
-  mokokoImageSrc: [
-    "../images/orangeMokoko.png",
-    "../images/pinkMokoko.png",
-    "../images/greenMokoko.png",
-    "../images/purpleMokoko.png",
-  ],
-  sadMokokoImageSrc: [
-    "../images/sadOrangeMokoko.png",
-    "../images/sadPinkMokoko.png",
-    "../images/sadGreenMokoko.png",
-    "../images/sadPurpleMokoko.png",
-  ],
-  happyMokokoImageSrc: [
-    "../images/happyOrangeMokoko.png",
-    "../images/happyPinkMokoko.png",
-    "../images/happyGreenMokoko.png",
-    "../images/happyPurpleMokoko.png",
-  ],
-
   tabName: document.getElementById("tabname"),
   tabIcon: document.getElementById("tabicon"),
   initialize: () => {
     app.tabName.innerText = sessionStorage.getItem("name");
     if (app.tabName.innerText == "Orange Mokoko") {
       app.tabIcon.href = "../images/orangeMokoko.png";
-    } else if (app.tabName.innerText == "Pink Mokoko") {
+    } 
+    else if (app.tabName.innerText == "Pink Mokoko") {
       app.tabIcon.href = "../images/pinkMokoko.png";
-    } else if (app.tabName.innerText == "Green Mokoko") {
+    } 
+    else if (app.tabName.innerText == "Green Mokoko") {
       app.tabIcon.href = "../images/greenMokoko.png";
-    } else if (app.tabName.innerText == "Purple Mokoko") {
+    } 
+    else if (app.tabName.innerText == "Purple Mokoko") {
       app.tabIcon.href = "../images/purpleMokoko.png";
-    }
+    } 
     app.turnHeader.classList.remove("none");
     app.turnHeader.innerText = "Level One";
     app.returnButton.addEventListener("click", () => {
@@ -65,25 +40,14 @@ const app = {
         let data = {
           name: sessionStorage.getItem("name"),
           room: sessionStorage.getItem("room"),
-          playerID: sessionStorage.getItem("playerID"),
         };
         socket.emit("gameInitialize", data);
       });
 
       socket.on("playerTurn", (data) => {
-        console.log("ahhhhh", data);
-
         //receiving data for turns
-        setTimeout(() => {
-          app.aliveDiv.classList.remove("none");
-          app.turnContainer.classList.remove("none");
-          app.playerImg.src = app.mokokoImageSrc[parseInt(data.playerID)];
-          app.turnText.innerHTML = `${data.name}'s Turn`;
-        }, 2000);
-
         if (data.name == sessionStorage.getItem("name")) {
           setTimeout(() => {
-            app.turnContainer.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
             app.turnHeader.classList.remove("none");
             app.turnHeader.innerText = "Your turn!";
             app.gameContainer.classList.remove("pointerNone");
@@ -98,8 +62,6 @@ const app = {
           console.log("my turn");
         } else {
           setTimeout(() => {
-            app.turnContainer.style.backgroundColor =
-              "rgba(244, 244, 244, 0.3)";
             app.turnHeader.classList.remove("none");
             app.turnHeader.innerText = `${data.name}'s turn!`;
             app.gameContainer.classList.add("pointerNone");
@@ -121,7 +83,6 @@ const app = {
         if (data.result) {
           console.log("you lived");
           app.resultHeader.innerText = "You lived";
-          app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
           door.src = "../images/emptyDoor.png";
           setTimeout(() => {
             app.resultHeader.classList.add("none");
@@ -129,11 +90,7 @@ const app = {
         } else {
           console.log("you died");
           app.resultHeader.innerText = `You died`;
-          let tempText = "player" + String(parseInt(data.playerID) + 1);
-          console.log("temp", tempText);
-          document.getElementById(tempText).classList.add("none");
 
-          app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
           door.src = "../images/deadDoor.png";
           setTimeout(() => {
             app.resultHeader.classList.add("none");
@@ -150,7 +107,7 @@ const app = {
         app.resultHeader.classList.remove("none");
         if (data.result) {
           console.log("PLAYER LIVED");
-          app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
+
           app.resultHeader.innerText = `${data.player} lived`;
           door.src = "../images/emptyDoor.png";
           setTimeout(() => {
@@ -160,10 +117,6 @@ const app = {
           console.log("you died");
           app.resultHeader.innerText = `${data.player} died`;
           door.src = "../images/deadDoor.png";
-          let tempText = "player" + String(parseInt(data.playerID) + 1);
-          console.log("temp", tempText);
-          document.getElementById(tempText).classList.add("none");
-          app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
           setTimeout(() => {
             app.resultHeader.classList.add("none");
           }, 2000);
@@ -183,8 +136,6 @@ const app = {
           }
           app.turnHeader.innerText = "Level One Ended";
           app.resultHeader.classList.add("none");
-          app.aliveDiv.classList.add("none");
-          app.turnContainer.classList.add("none");
         }, 2000);
 
         setTimeout(() => {
@@ -406,6 +357,7 @@ const app = {
       //   }, 1000);
       // });
 
+      
       socket.on("gameOver3", (data) => {
         setTimeout(() => {
           app.turnHeader.innerText = `${data.name} won!!!`;
@@ -423,31 +375,28 @@ const app = {
           app.turnHeader.classList.add("none");
           socket.emit("levelFour");
         }, 3500);
+
       });
 
       socket.on("levelFourStart", () => {
         setTimeout(() => {
           app.turnHeader.classList.remove("none");
-          document.getElementById("dark_layer").classList.remove("none");
+          document.getElementById("dark_layer").classList.remove("none"); 
           app.turnHeader.innerText = "Level Four";
 
           //REMOVE ITEMS FROM LEVEL THREE HERE
-          document.getElementById("aliveDiv").classList.add("none");
-          document.getElementById("turnContainer").classList.add("none");
-          document.getElementById("crocodileClosed").classList.add("none");
+          document.getElementById("aliveDiv").classList.add("none"); 
+          document.getElementById("turnContainer").classList.add("none"); 
+          document.getElementById("crocodileClosed").classList.add("none"); 
           document.body.style.backgroundColor = "#595959";
-          document.getElementById("lobby_wall").src =
-            "../images/lobbyWall4.png";
+          document.getElementById("lobby_wall").src = "../images/lobbyWall4.png";
           app.turnHeader.innerText = "Level Four";
 
           //ADD ITEMS FOR LEVEL FOUR HERE
           app.gameContainer.classList.remove("pointerNone");
-          document
-            .getElementById("mysterycard_container")
-            .classList.remove("none");
-          document
-            .getElementById("mysterycard_container")
-            .classList.remove("pointerNone");
+          document.getElementById("mysterycard_container").classList.remove("none");
+          document.getElementById("mysterycard_container").classList.remove("pointerNone"); 
+
         }, 1000);
 
         setTimeout(() => {
@@ -455,13 +404,13 @@ const app = {
         }, 3500);
 
         setTimeout(() => {
-          document.getElementById("dark_layer").classList.add("none");
-
+          document.getElementById("dark_layer").classList.add("none"); 
+          
           app.turnHeader.classList.add("none");
-          // document.getElementById("mysterycard_container").classList.add("none");
+          // document.getElementById("mysterycard_container").classList.add("none"); 
           document.getElementById("card").src = "../images/takeyourguess.png";
-<<<<<<< HEAD
           document.getElementById("submitNumber").classList.remove("none"); 
+          
           document.getElementById("leaderboard").classList.remove("none"); 
 
           document.getElementById("submitNumber").classList.remove("pointerNone"); 
@@ -476,26 +425,6 @@ const app = {
             socket.emit("numberGuessed", data);
             console.log("answer sent",data);
           });
-=======
-
-          document.getElementById("submitNumber").classList.remove("none");
-          document
-            .getElementById("submitNumber")
-            .classList.remove("pointerNone");
-          document
-            .getElementById("submit_number")
-            .addEventListener("click", (e) => {
-              answer = document.getElementById("insert_number").value;
-              console.log(answer);
-              data = {
-                room: sessionStorage.getItem("room"),
-                name: sessionStorage.getItem("name"),
-                guess: answer,
-              };
-              socket.emit("numberGuessed", data);
-              console.log("answer sent", data);
-            });
->>>>>>> d6d2e80d4e23a664b17dbae7a97eb0deee581368
         }, 7000);
       });
       let clueHeader = document.getElementById("clue_header");
@@ -506,7 +435,8 @@ const app = {
         setTimeout(() => {
           clueHeader.classList.add("none");
         }, 1000);
-      });
+
+      })
 
       socket.on("lower", () => {
         clueHeader.classList.remove("none");
@@ -515,35 +445,22 @@ const app = {
         setTimeout(() => {
           clueHeader.classList.add("none");
         }, 1000);
-      });
+      })
 
       socket.on("correctnumber", () => {
-        clueHeader.classList.remove("none");
-        clueHeader.style.color = "green";
-        clueHeader.innerText = "Correct";
-        setTimeout(() => {
-          clueHeader.classList.add("none");
-        }, 1000);
-      });
+        document.getElementById("card").src = "../images/correctCard.png";
+        document.getElementById("submitNumber").classList.add("none"); 
+        document.getElementById("submitNumber").classList.add("pointerNone"); 
+      })
 
-      let userGuessedCounter = 0;
+      let guesseditheader = document.getElementById("guessedit");
 
       socket.on("userGuessedIt", (data) => {
-        // userGuessedCounter = userGuessedCounter+1;
-        // if (userGuessedCounter == 4) {
-        //   socket.emit("gameOver4");
-        //   userGuessedCounter = 0;
-        // }
-
-        app.turnHeader.classList.remove("none");
-        app.turnHeader.innerText = data.name + " guessed it";
-        // let guessedUsers = [];
-        // guessedUsers.push(data.name);
-        // console.log("guessed Users"+ guessedUsers);
-        // console.log("guessed Users Length"+ guessedUsers.length);
+        guesseditheader.classList.remove("none");
+        guesseditheader.innerText = data.name + " guessed it";
 
         if (data.name == "Pink Mokoko"){
-          document.getElementById("player1Img").src = "../images/pinkMokoko.png"; 
+          document.getElementById("player1Img").src = "../images/pinkMokoko.png";
         } 
         else if (data.name == "Orange Mokoko"){
           document.getElementById("player2Img").src = "../images/orangeMokoko.png"; 
@@ -554,21 +471,41 @@ const app = {
         else if (data.name == "Purple Mokoko"){
           document.getElementById("player4Img").src = "../images/purpleMokoko.png"; 
         }
-
-        if ((document.getElementById("player1Img").src != "../images/emptyMokoko.png")&&
-        (document.getElementById("player2Img").src != "../images/emptyMokoko.png")&&
-        (document.getElementById("player3Img").src != "../images/emptyMokoko.png")&&
-        (document.getElementById("player4Img").src != "../images/emptyMokoko.png")){
-        console.log("EVERYTHING IS FILLED HEY");
-        socket.emit("gameOver4");
-        }
         setTimeout(() => {
-          app.turnHeader.classList.add("none");
+          guesseditheader.classList.add("none");
+        }, 2500);
+      })
+
+      socket.on("greenislast", () => {
+
+        setTimeout(() => {
+          document.getElementById("card").classList.add("none");
+          document.getElementById("submitNumber").classList.add("none"); 
+          document.getElementById("submitNumber").classList.add("pointerNone");
+        }, 1000);
+        setTimeout(() => {
+          document.getElementById("card").src = "../images/greenDied.png";
+          document.getElementById("card").classList.remove("none");
         }, 2000);
       })
 
+      socket.on("purpleislast", () => {
+        document.getElementById("submitNumber").classList.add("none"); 
+        document.getElementById("submitNumber").classList.add("pointerNone"); 
+        document.getElementById("card").src = "../images/purpleDied.png";
+      })
 
-      
+      socket.on("orangeislast", () => {
+        document.getElementById("submitNumber").classList.add("none"); 
+        document.getElementById("submitNumber").classList.add("pointerNone"); 
+        document.getElementById("card").src = "../images/orangeDied.png";
+      })
+
+      socket.on("pinkislast", () => {
+        document.getElementById("submitNumber").classList.add("none"); 
+        document.getElementById("submitNumber").classList.add("pointerNone"); 
+        document.getElementById("card").src = "../images/pinkDied.png";
+      })
 
       let teeth = document.querySelectorAll(".tooth");
 
