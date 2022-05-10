@@ -30,8 +30,8 @@ body {
   display: flex;
   justify-content: center;
   font-family: "Inter";
-  width: 15vw;
-  height: 27.5vh;
+  width: 12.5vw;
+  height: 25vh;
   background-color: rgba(244, 244, 244, 0.3);
 }
 
@@ -75,19 +75,14 @@ body {
 .turnContainer {
   right: 2.5%;
   top: 5%;
-  background-color: rgba(244, 244, 244, 0.3);
-  font-family: "Joti One", cursive;
 }
 .playerImg {
   width: 60%;
   height: auto;
 }
-.aliveHeader {
-  font-family: "Joti One", cursive;
-}
+
 .playerAliveDiv {
-  line-height: 2rem;
-  text-align: center;
+  line-height: 1.5rem;
 }
 .opacityOverlay h3 {
   /* margin-top: 5%; */
@@ -233,12 +228,12 @@ body {
 
 .mysterycard_container {
   z-index: -1;
-  border: solid;
   position: fixed;
   bottom: 0%;
 }
 
-.submitNumber {
+
+.submitNumber{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -259,4 +254,14 @@ body {
   width: 100px;
 
   padding: 10px;
+
+}
+
+.guessedit {
+  position: fixed;
+  top: 7%;
+  left: 39%;
+  color: white;
+  font-size: 1.5rem;
+  font-family: "Joti One", cursive;
 }
