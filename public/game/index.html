@@ -15,37 +15,58 @@
       href="https://fonts.googleapis.com/css2?family=Inter&family=Joti+One&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" id="tabicon" href="../images/greenMokoko.png">
+    <link rel="icon" id="tabicon" href="../images/greenMokoko.png" />
 
     <title id="tabname">Document</title>
   </head>
   <body>
-    <img id="lobby_wall" class="lobby_wall" src="../images/lobbyWall.png" />
+    <img id="lobby_wall" class="lobby_wall" src="../images/lobbyWall4.png" />
+    <img
+      id="big"
+      class="big_mokoko none pointerNone"
+      src="../images/greenDied.png"
+    />
 
     <div id="dark_layer" class="dark_layer none"></div>
-    <div class="aliveDiv opacityOverlay" id="aliveDiv">
-      <h3>Who's Still Alive</h3>
+    <div class="aliveDiv opacityOverlay none" id="aliveDiv">
+      <h3 class="aliveHeader">Who's still alive?</h3>
       <div class="playerAliveDiv">
-        <h4 id="player1">USER A</h4>
-        <h4 id="player2">USER B</h4>
-        <h4 id="player3">USER C</h4>
-        <h4 id="player4">USER D</h4>
+        <h4 id="player1">Orange Mokoko</h4>
+        <h4 id="player2">Pink Mokoko</h4>
+        <h4 id="player3">Green Mokoko</h4>
+        <h4 id="player4">Purple Mokoko</h4>
       </div>
     </div>
 
-    <div class="turnContainer opacityOverlay" id="turnContainer">
-      <h3>[Player] Turn</h3>
-      <img class="playerImg" src="../images/orangeMokoko.png" />
+    <div class="turnContainer opacityOverlay none" id="turnContainer">
+      <h3 id="turnText">Player Turn</h3>
+      <img class="playerImg" src="../images/emptyMokoko.png" />
     </div>
 
     <div class="leaderBoard opacityOverlay none" id="leaderboard">
       <h2 class="guessedtext">First Three Guessers</h2>
-      <div class = "leaderboardMokokos">
-      <img class="playerImg" id="player1Img" src="../images/emptyMokoko.png" />
-      <img class="playerImg" id="player2Img" src="../images/emptyMokoko.png" />
-      <img class="playerImg" id="player3Img" src="../images/emptyMokoko.png" />
-      <img class="playerImg" id="player4Img" src="../images/emptyMokoko.png" />
-    </div>
+      <div class="leaderboardMokokos">
+        <img
+          class="playerImg"
+          id="player1Img"
+          src="../images/emptyMokoko.png"
+        />
+        <img
+          class="playerImg"
+          id="player2Img"
+          src="../images/emptyMokoko.png"
+        />
+        <img
+          class="playerImg"
+          id="player3Img"
+          src="../images/emptyMokoko.png"
+        />
+        <img
+          class="playerImg"
+          id="player4Img"
+          src="../images/emptyMokoko.png"
+        />
+      </div>
     </div>
 
     <h2 class="reset_header"></h2>
@@ -61,7 +82,7 @@
     <section class="game_container pointerNone">
       <!-- <h2 class="game_header">Pick a door</h2> -->
 
-      <div class="door_container">
+      <div class="door_container none" id="door_container">
         <img id="door1" class="door" data-num="1" src="../images/door.png" />
         <img id="door2" class="door" data-num="2" src="../images/door.png" />
         <img id="door3" class="door" data-num="3" src="../images/door.png" />
@@ -565,20 +586,29 @@
         </defs>
       </svg>
 
-      <div class="mysterycard_container none pointerNone" id="mysterycard_container">
-        <img
-          id="card"
-          class="chalice"
-          data-num="1"
-          src="../images/mysteryCard.png"
-        />
+      <div
+        class="mysterycard_container none pointerNone"
+        id="mysterycard_container"
+      >
+        <img id="card" data-num="1" src="../images/mysteryCard.png" />
       </div>
 
       <div class="submitNumber none pointerNone" id="submitNumber">
-        <input class="insert_number" id="insert_number" type="text" id="lname" name="lname" placeholder="insert a number between 1-100"><br><br>
-        <input class="submit_number" id="submit_number" type="submit" value="Submit">
+        <input
+          class="insert_number"
+          id="insert_number"
+          type="text"
+          id="lname"
+          name="lname"
+          placeholder="insert a number between 1-100"
+        /><br /><br />
+        <input
+          class="submit_number"
+          id="submit_number"
+          type="submit"
+          value="Submit"
+        />
       </div>
-      
     </section>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="game.js"></script>

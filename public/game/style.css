@@ -6,9 +6,8 @@ body {
 }
 
 body {
-  background-color: white;
   font-family: "Joti One", cursive;
-  background-color: #7c4068;
+  background-color: #595959;
 }
 .game_container {
   /* background-color: #fde396; */
@@ -40,6 +39,7 @@ body {
   right: 2.5%;
   top: 5%;
   flex-direction: column;
+  text-align: center;
   /* align-items: center; */
   border-radius: 1rem;
   border: 0.6rem solid white;
@@ -59,7 +59,7 @@ body {
   align-items: center;
   height: 50vh;
   width: 10vw;
-  top: 18%;  
+  top: 18%;
 }
 .guessedtext {
   position: absolute;
@@ -75,14 +75,19 @@ body {
 .turnContainer {
   right: 2.5%;
   top: 5%;
+  background-color: rgba(244, 244, 244, 0.3);
+  font-family: "Joti One", cursive;
 }
 .playerImg {
   width: 60%;
   height: auto;
 }
-
+.aliveHeader {
+  font-family: "Joti One", cursive;
+}
 .playerAliveDiv {
-  line-height: 1.5rem;
+  line-height: 2rem;
+  text-align: center;
 }
 .opacityOverlay h3 {
   /* margin-top: 5%; */
@@ -173,7 +178,7 @@ body {
   transform: translate(-50%, -50%);
   z-index: 10;
 }
-.clue_header{
+.clue_header {
   color: white;
   font-size: 2rem;
   position: absolute;
@@ -197,7 +202,7 @@ body {
 .return_button {
   font-size: 1rem;
   position: absolute;
-  top: 40%;
+  bottom: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
   letter-spacing: 0.2em;
@@ -232,8 +237,7 @@ body {
   bottom: 0%;
 }
 
-
-.submitNumber{
+.submitNumber {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -254,14 +258,20 @@ body {
   width: 100px;
 
   padding: 10px;
-
 }
 
 .guessedit {
   position: fixed;
-  top: 7%;
-  left: 39%;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
   font-size: 1.5rem;
   font-family: "Joti One", cursive;
+}
+.big_mokoko {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

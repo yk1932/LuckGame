@@ -24,6 +24,7 @@ const randomize = (totalNum) => {
 
 //randomize the initial numbers that we use for each game
 let doorNum = randomize(4);
+console.log("door num!!", doorNum);
 let toothNum = randomize(13);
 let chaliceNum = randomize(3);
 let mysteryNum = randomize(100);
@@ -98,12 +99,14 @@ io.sockets.on("connect", (socket) => {
     if (users[socket.roomName]) {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName].push(playerInfo);
     } else {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName] = [playerInfo];
@@ -113,6 +116,7 @@ io.sockets.on("connect", (socket) => {
     io.to(socket.roomName).emit("loadPlayers", playerList);
   });
 
+  // Level One
   socket.on("gameInitialize", (data) => {
     //initializing the game (when we reach the game page)
     console.log("in game initialize");
@@ -135,22 +139,38 @@ io.sockets.on("connect", (socket) => {
     if (users[socket.roomName]) {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName].push(playerInfo);
     } else {
       let playerInfo = {
         name: socket.name,
+        playerID: data.playerID,
         status: true,
       };
       users[socket.roomName] = [playerInfo];
     }
+
+    // io.to(socket.roomName).emit("playerTurn", turnData);
+    io.to(socket.roomName).emit("levelOneStart");
+  });
+
+  socket.on("levelOneEnd", () => {
     //getting next player and sending signal
+
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (players[currentTurn] == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data", playerIDturn);
+      }
+    }
     let turnData = {
       name: players[currentTurn],
+      playerID: playerIDturn,
     };
-    io.to(socket.roomName).emit("playerTurn", turnData);
-
+    io.to(socket.roomName).emit("levelTwoStart", turnData);
   });
 
   socket.on("startPressed", (data) => {
@@ -198,8 +218,11 @@ io.sockets.on("connect", (socket) => {
           users[socket.roomName][i].status = false;
         }
       }
+      let playerIDdata = {
+        playerID: data.playerID,
+      };
       //signal game is over and to go to next game
-      io.to(socket.roomName).emit("gameOver");
+      io.to(socket.roomName).emit("gameOver", playerIDdata);
 
       turn = 0;
       currentTurn = 0;
@@ -209,20 +232,39 @@ io.sockets.on("connect", (socket) => {
       turn = currentTurn % players.length;
       console.log(currentTurn, players.length, "ioufhdsiufhdsiufhdisuhf");
       console.log("!!! turn", turn);
-      let nextPlayer = {
-        name: players[turn],
-      };
-      console.log(nextPlayer);
+      // let nextPlayer = {
+      //   name: players[turn],
+      // };
       console.log(socket.roomName);
-      io.to(socket.roomName).emit("playerTurn", nextPlayer);
+      let playerIDturn;
+      for (let i = 0; i < users[socket.roomName].length; i++) {
+        if (players[turn] == users[socket.roomName][i].name) {
+          playerIDturn = users[socket.roomName][i].playerID;
+          console.log("turn data2", playerIDturn);
+        }
+      }
+      let turnData = {
+        name: players[turn],
+        playerID: playerIDturn,
+      };
+      io.to(socket.roomName).emit("playerTurn", turnData);
     }
     //shjowing all results to the players
     console.log(users[socket.roomName]);
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (socket.name == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data3", playerIDturn);
+      }
+    }
     let player = {
       player: socket.name,
       result: playerStatus,
       door: data.guess,
+      playerID: playerIDturn,
     };
+    console.log("player!!!", player);
     socket.emit("yourResult", player);
     socket.to(socket.roomName).emit("playerResult", player);
     doorGuessNum++;
@@ -239,15 +281,26 @@ io.sockets.on("connect", (socket) => {
   //initialize the page for game 2
   socket.on("levelTwo", () => {
     console.log("Level two start eeeeeK", players);
-    io.to(socket.roomName).emit("gameOver3");
+    // io.to(socket.roomName).emit("gameOver");
 
-    // io.to(socket.roomName).emit("levelTwoStart");
+    io.to(socket.roomName).emit("levelThreeStart");
   });
   //actually beginning game 2 and signalling to players to start their turn
   //similar to code above
   socket.on("beginLevelTwo", () => {
+    // let turnData = {
+    //   name: players[turn],
+    // };
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (players[turn] == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data4", playerIDturn);
+      }
+    }
     let turnData = {
-      name: players[turn],
+      name: players[currentTurn],
+      playerID: playerIDturn,
     };
     io.to(socket.roomName).emit("playerTurn", turnData);
   });
@@ -266,36 +319,66 @@ io.sockets.on("connect", (socket) => {
           users[socket.roomName][i].status = false;
         }
       }
-      io.to(socket.roomName).emit("gameOver2");
+      let playerIDdata = {
+        playerID: data.playerID,
+      };
+      io.to(socket.roomName).emit("gameOver2", playerIDdata);
       turn = 0;
       currentTurn = 0;
     } else {
       currentTurn++;
       turn = currentTurn % players.length;
-      let nextPlayer = {
-        name: players[turn],
+      // let nextPlayer = {
+      //   name: players[turn],
+      // };
+      let playerIDturn;
+      for (let i = 0; i < users[socket.roomName].length; i++) {
+        if (players[turn] == users[socket.roomName][i].name) {
+          playerIDturn = users[socket.roomName][i].playerID;
+          console.log("turn data5", playerIDturn);
+        }
+      }
+      let turnData = {
+        name: players[currentTurn],
+        playerID: playerIDturn,
       };
-      io.to(socket.roomName).emit("playerTurn", nextPlayer);
+      io.to(socket.roomName).emit("playerTurn", turnData);
+    }
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (socket.name == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data6", playerIDturn);
+      }
     }
     let player = {
       player: socket.name,
       result: playerStatus,
       chalice: data.guess,
+      playerID: playerIDturn,
     };
     socket.emit("yourChaliceResult", player);
     socket.to(socket.roomName).emit("playerChaliceResult", player);
   });
 
   //similar to code above, these probably shouldv'e been one event that different based on what game it was
-  socket.on("levelThree", () => {
+  socket.on("levelFour", () => {
     console.log("Level three start eeeeeK", players);
     console.log("123123", players[turn], turn);
 
-    io.to(socket.roomName).emit("levelThreeStart");
+    io.to(socket.roomName).emit("levelFourStart");
   });
-  socket.on("beginLevelThree", () => {
+  socket.on("beginLevelFour", () => {
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (players[turn] == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data7", playerIDturn);
+      }
+    }
     let turnData = {
-      name: players[turn],
+      name: players[currentTurn],
+      playerID: playerIDturn,
     };
     io.to(socket.roomName).emit("playerTurn", turnData);
   });
@@ -316,8 +399,16 @@ io.sockets.on("connect", (socket) => {
           users[socket.roomName][i].status = false;
         }
       }
+      let playerIDturn;
+      for (let i = 0; i < users[socket.roomName].length; i++) {
+        if (players[0] == users[socket.roomName][i].name) {
+          playerIDturn = users[socket.roomName][i].playerID;
+          console.log("turn data9", playerIDturn);
+        }
+      }
       let data = {
         name: players[0],
+        playerIDturn: playerIDturn,
       };
       io.to(socket.roomName).emit("gameOver3", data);
       turn = 0;
@@ -327,26 +418,37 @@ io.sockets.on("connect", (socket) => {
       turn = currentTurn % players.length;
       console.log(currentTurn, players.length, "ioufhdsiufhdsiufhdisuhf");
       console.log("!!! turn", turn);
-      let nextPlayer = {
+      // let nextPlayer = {
+      //   name: players[turn],
+      // };
+      let playerIDturn;
+      for (let i = 0; i < users[socket.roomName].length; i++) {
+        if (players[turn] == users[socket.roomName][i].name) {
+          playerIDturn = users[socket.roomName][i].playerID;
+          console.log("turn data7", playerIDturn);
+        }
+      }
+      let turnData = {
         name: players[turn],
+        playerID: playerIDturn,
       };
-      console.log(nextPlayer);
-      console.log(socket.roomName);
-      io.to(socket.roomName).emit("playerTurn", nextPlayer);
+      io.to(socket.roomName).emit("playerTurn", turnData);
+    }
+    let playerIDturn;
+    for (let i = 0; i < users[socket.roomName].length; i++) {
+      if (socket.name == users[socket.roomName][i].name) {
+        playerIDturn = users[socket.roomName][i].playerID;
+        console.log("turn data8", playerIDturn);
+      }
     }
     let player = {
       player: socket.name,
       result: playerStatus,
       tooth: data.guess,
+      playerID: playerIDturn,
     };
     socket.emit("yourToothResult", player);
     socket.to(socket.roomName).emit("playerToothResult", player);
-  });
-
-  socket.on("levelFour", () => {
-    console.log("Level four start eeeeeK", players);
-    console.log("123123", players[turn], turn);
-    io.to(socket.roomName).emit("levelFourStart");
   });
 
   socket.on("numberGuessed", (data) => {
@@ -357,28 +459,25 @@ io.sockets.on("connect", (socket) => {
     if (data.guess < mysteryNum) {
       console.log("Guess higher!!");
       socket.emit("higher");
-    }
-    else if (data.guess > mysteryNum){
+    } else if (data.guess > mysteryNum) {
       socket.emit("lower");
       console.log("Guess Lower!!");
-    }
-    else if (data.guess == mysteryNum) {
-
+    } else if (data.guess == mysteryNum) {
       let guessedPlayer = {
         name: socket.name,
       };
 
-      console.log("NAME OF GUESSED PLAYER",socket.name);
-      if (socket.name == "Orange Mokoko"){
+      console.log("NAME OF GUESSED PLAYER", socket.name);
+      if (socket.name == "Orange Mokoko") {
         orangeGuess = true;
       }
-      if (socket.name == "Pink Mokoko"){
+      if (socket.name == "Pink Mokoko") {
         pinkGuess = true;
       }
-      if (socket.name == "Purple Mokoko"){
+      if (socket.name == "Purple Mokoko") {
         purpleGuess = true;
       }
-      if (socket.name == "Green Mokoko"){
+      if (socket.name == "Green Mokoko") {
         greenGuess = true;
       }
 
@@ -390,7 +489,12 @@ io.sockets.on("connect", (socket) => {
       console.log("CORRECT WOOO");
 
       //green is last
-      if ((orangeGuess ==true)&&(pinkGuess == true)&&(purpleGuess==true)&&(greenGuess==false)){
+      if (
+        orangeGuess == true &&
+        pinkGuess == true &&
+        purpleGuess == true &&
+        greenGuess == false
+      ) {
         console.log("GREEN IS LAST");
         io.to(socket.roomName).emit("greenislast");
         socket.emit("greenislast");
@@ -401,7 +505,12 @@ io.sockets.on("connect", (socket) => {
       }
 
       //purple is last
-      else if ((orangeGuess ==true)&&(pinkGuess == true)&&(greenGuess==true)&&(purpleGuess==false)){
+      else if (
+        orangeGuess == true &&
+        pinkGuess == true &&
+        greenGuess == true &&
+        purpleGuess == false
+      ) {
         console.log("PURPLE IS LAST");
         io.to(socket.roomName).emit("purpleislast");
         socket.emit("purpleislast");
@@ -412,7 +521,12 @@ io.sockets.on("connect", (socket) => {
       }
 
       //orange is last
-      else if ((purpleGuess ==true)&&(pinkGuess == true)&&(greenGuess==true)&&(orangeGuess==false)){
+      else if (
+        purpleGuess == true &&
+        pinkGuess == true &&
+        greenGuess == true &&
+        orangeGuess == false
+      ) {
         console.log("ORANGE IS LAST");
         io.to(socket.roomName).emit("orangeislast");
         socket.emit("orangeislast");
@@ -420,11 +534,15 @@ io.sockets.on("connect", (socket) => {
         pinkGuess = false;
         greenGuess = false;
         orangeGuess = false;
-
       }
 
       //pink is last
-      else if ((orangeGuess ==true)&&(purpleGuess == true)&&(greenGuess==true)&&(pinkGuess==false)){
+      else if (
+        orangeGuess == true &&
+        purpleGuess == true &&
+        greenGuess == true &&
+        pinkGuess == false
+      ) {
         console.log("PINK IS LAST");
         io.to(socket.roomName).emit("pinkislast");
         socket.emit("pinkislast");
@@ -432,13 +550,11 @@ io.sockets.on("connect", (socket) => {
         pinkGuess = false;
         greenGuess = false;
         orangeGuess = false;
-      }
-
-      else {
+      } else {
         socket.emit("correctnumber");
       }
-      
-      io.to(socket.roomName).emit("userGuessedIt",guessedPlayer);
+
+      io.to(socket.roomName).emit("userGuessedIt", guessedPlayer);
     }
   });
 
