@@ -41,7 +41,7 @@ const app = {
     app.returnButton.addEventListener("click", () => {
       window.location = "../";
     });
-    
+
     // Change the inner tab based on the name of the Mokoko
     app.tabName.innerText = sessionStorage.getItem("name");
     if (app.tabName.innerText == "Orange Mokoko") {
@@ -476,23 +476,56 @@ const app = {
       app.resultHeader.classList.remove("none");
       console.log("FLJSIOJDOIFJSIOD", chalice);
       if (data.result) {
-        document.getElementById("drinkChaliceSound").play();
+        app.resultHeader.classList.add("none");
         console.log("you lived");
-        app.resultHeader.innerText = "You lived";
-        chalice.src = "../images/emptyCup.png";
-        app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
+        chalice.classList.add("chalice_animation");
+        anime({
+          targets: ".chalice_animation",
+          translateY: -50,
+          duration: 1000,
+          easing: "easeInOutSine",
+        });
+        setTimeout(() => {
+          document.getElementById("drinkChaliceSound").play();
+          app.resultHeader.classList.remove("none");
+          chalice.src = "../images/emptyCup.png";
+          app.resultHeader.innerText = "You lived";
+          app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
+        }, 1100);
+
         setTimeout(() => {
           app.resultHeader.classList.add("none");
         }, 2000);
+
+        // console.log("you lived");
+        // app.resultHeader.innerText = "You lived";
+        // chalice.src = "../images/emptyCup.png";
+        // app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
+        // setTimeout(() => {
+        //   app.resultHeader.classList.add("none");
+        // }, 2000);
       } else {
-        console.log("you died");
         app.resultHeader.innerText = `You died`;
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
-        document.getElementById(tempText).classList.add("none");
-        document.getElementById("drinkPoisonSound").play();
-        app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
-        chalice.src = "../images/poisonCup.png";
+        app.resultHeader.classList.add("none");
+
+        chalice.classList.add("chalice_animation");
+        anime({
+          targets: ".chalice_animation",
+          translateY: -50,
+          duration: 1000,
+          easing: "easeInOutSine",
+        });
+        setTimeout(() => {
+          chalice.src = "../images/poisonCup.png";
+          app.resultHeader.innerText = "You died";
+          app.resultHeader.classList.remove("none");
+          app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
+          document.getElementById(tempText).classList.add("none");
+          document.getElementById("drinkPoisonSound").play();
+        }, 1100);
+
         setTimeout(() => {
           app.resultHeader.classList.add("none");
         }, 2000);
@@ -505,23 +538,44 @@ const app = {
       chalice.classList.add("pointerNone");
       app.resultHeader.classList.remove("none");
       if (data.result) {
-        app.resultHeader.innerText = `${data.player} lived`;
-        document.getElementById("drinkChaliceSound").play();
-
-        app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
-        chalice.src = "../images/emptyCup.png";
+        app.resultHeader.classList.add("none");
+        chalice.classList.add("chalice_animation");
+        anime({
+          targets: ".chalice_animation",
+          translateY: -50,
+          duration: 1000,
+          easing: "easeInOutSine",
+        });
+        setTimeout(() => {
+          app.resultHeader.classList.remove("none");
+          chalice.src = "../images/emptyCup.png";
+          app.resultHeader.innerText = `${data.player} lived`;
+          app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
+          document.getElementById("drinkChaliceSound").play();
+        }, 1100);
         setTimeout(() => {
           app.resultHeader.classList.add("none");
         }, 2000);
       } else {
-        app.resultHeader.innerText = `${data.player} died`;
-        chalice.src = "../images/poisonCup.png";
-        document.getElementById("drinkPoisonSound").play();
+        app.resultHeader.classList.add("none");
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
         document.getElementById(tempText).classList.add("none");
+        chalice.classList.add("chalice_animation");
+        anime({
+          targets: ".chalice_animation",
+          translateY: -50,
+          duration: 1000,
+          easing: "easeInOutSine",
+        });
+        setTimeout(() => {
+          app.resultHeader.classList.remove("none");
+          app.resultHeader.innerText = `${data.player} died`;
+          chalice.src = "../images/poisonCup.png";
+          app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
+          document.getElementById("drinkPoisonSound").play();
+        }, 1100);
 
-        app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
         setTimeout(() => {
           app.resultHeader.classList.add("none");
         }, 2000);
