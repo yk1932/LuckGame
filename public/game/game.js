@@ -35,10 +35,13 @@ const app = {
   tabName: document.getElementById("tabname"),
   tabIcon: document.getElementById("tabicon"),
   initialize: () => {
+    // Play Background Music
+    document.getElementById("backgroundMusic").play();
+
     app.returnButton.addEventListener("click", () => {
       window.location = "../";
     });
-
+    
     // Change the inner tab based on the name of the Mokoko
     app.tabName.innerText = sessionStorage.getItem("name");
     if (app.tabName.innerText == "Orange Mokoko") {
@@ -95,6 +98,7 @@ const app = {
         document
           .getElementById("submit_number")
           .addEventListener("click", (e) => {
+            document.getElementById("clickSound").play();
             answer = document.getElementById("insert_number").value;
 
             console.log(answer);
@@ -129,6 +133,7 @@ const app = {
     });
 
     socket.on("correctnumber", () => {
+      document.getElementById("correctSound").play();
       document.getElementById("card").src = "../images/correctCard.png";
       document.getElementById("submitNumber").classList.add("none");
       document.getElementById("submitNumber").classList.add("pointerNone");
@@ -137,6 +142,7 @@ const app = {
     let guesseditheader = document.getElementById("guessedit");
 
     socket.on("userGuessedIt", (data) => {
+      document.getElementById("correctSound").play();
       guesseditheader.classList.remove("none");
       guesseditheader.innerText = data.name + " guessed it";
 
@@ -165,6 +171,7 @@ const app = {
       }, 1000);
       setTimeout(() => {
         document.getElementById("card").src = "../images/greenDied.png";
+        document.getElementById("lostSound").play();
         document.getElementById("card").classList.remove("none");
       }, 2000);
       setTimeout(() => {
@@ -186,6 +193,7 @@ const app = {
       }, 1000);
       setTimeout(() => {
         document.getElementById("card").src = "../images/purpleDied.png";
+        document.getElementById("lostSound").play();
         document.getElementById("card").classList.remove("none");
       }, 2000);
       setTimeout(() => {
@@ -208,6 +216,7 @@ const app = {
       setTimeout(() => {
         document.getElementById("card").src = "../images/orangeDied.png";
         document.getElementById("card").classList.remove("none");
+        document.getElementById("lostSound").play();
       }, 2000);
       setTimeout(() => {
         let data = {
@@ -229,6 +238,7 @@ const app = {
       setTimeout(() => {
         document.getElementById("card").src = "../images/pinkDied.png";
         document.getElementById("card").classList.remove("none");
+        document.getElementById("lostSound").play();
       }, 2000);
       setTimeout(() => {
         let data = {
@@ -324,6 +334,7 @@ const app = {
       console.log("FLJSIOJDOIFJSIOD", door);
       if (data.result) {
         console.log("you lived");
+        document.getElementById("correctSound").play();
         app.resultHeader.innerText = "You lived";
         app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
         door.src = "../images/emptyDoor.png";
@@ -333,6 +344,7 @@ const app = {
       } else {
         console.log("you died");
         app.resultHeader.innerText = `You died`;
+        document.getElementById("bombSound").play();
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
         document.getElementById(tempText).classList.add("none");
@@ -358,16 +370,19 @@ const app = {
         app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
         app.resultHeader.innerText = `${data.player} lived`;
         door.src = "../images/emptyDoor.png";
+        document.getElementById("correctSound").play();
         setTimeout(() => {
           app.resultHeader.classList.add("none");
         }, 2000);
       } else {
         console.log("you died");
+        document.getElementById("bombSound").play();
         app.resultHeader.innerText = `${data.player} died`;
         door.src = "../images/deadDoor.png";
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
         document.getElementById(tempText).classList.add("none");
+
         app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
         setTimeout(() => {
           app.resultHeader.classList.add("none");
@@ -397,6 +412,8 @@ const app = {
         document.getElementById("big").classList.add("none");
         app.turnHeader.classList.add("none");
         console.log("this it it!!!!!");
+        document.getElementById("lostSound").play();
+
         document.getElementById("big").src =
           app.deadMokokoImageSrc[parseInt(playerID)];
         document.getElementById("big").classList.remove("none");
@@ -459,6 +476,7 @@ const app = {
       app.resultHeader.classList.remove("none");
       console.log("FLJSIOJDOIFJSIOD", chalice);
       if (data.result) {
+        document.getElementById("drinkChaliceSound").play();
         console.log("you lived");
         app.resultHeader.innerText = "You lived";
         chalice.src = "../images/emptyCup.png";
@@ -472,7 +490,7 @@ const app = {
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
         document.getElementById(tempText).classList.add("none");
-
+        document.getElementById("drinkPoisonSound").play();
         app.playerImg.src = app.sadMokokoImageSrc[parseInt(data.playerID)];
         chalice.src = "../images/poisonCup.png";
         setTimeout(() => {
@@ -488,6 +506,8 @@ const app = {
       app.resultHeader.classList.remove("none");
       if (data.result) {
         app.resultHeader.innerText = `${data.player} lived`;
+        document.getElementById("drinkChaliceSound").play();
+
         app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
         chalice.src = "../images/emptyCup.png";
         setTimeout(() => {
@@ -496,6 +516,7 @@ const app = {
       } else {
         app.resultHeader.innerText = `${data.player} died`;
         chalice.src = "../images/poisonCup.png";
+        document.getElementById("drinkPoisonSound").play();
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
         document.getElementById(tempText).classList.add("none");
@@ -529,6 +550,7 @@ const app = {
         document.getElementById("big").classList.add("none");
         app.turnHeader.classList.add("none");
         console.log("this it it!!!!!");
+        document.getElementById("lostSound").play();
         document.getElementById("big").src =
           app.deadMokokoImageSrc[parseInt(playerID)];
         document.getElementById("big").classList.remove("none");
@@ -580,6 +602,7 @@ const app = {
       app.resultHeader.classList.remove("none");
       if (data.result) {
         app.resultHeader.innerText = "You lived";
+        document.getElementById("correctSound").play();
         app.playerImg.src = app.happyMokokoImageSrc[parseInt(data.playerID)];
         tooth.style.fill = "#D3D2D2";
         setTimeout(() => {
@@ -587,6 +610,7 @@ const app = {
         }, 2000);
       } else {
         app.resultHeader.innerText = `You died`;
+        document.getElementById("crocodileSnapSound").play();
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
         document.getElementById(tempText).classList.add("none");
@@ -610,7 +634,7 @@ const app = {
       app.resultHeader.classList.remove("none");
       if (data.result) {
         console.log("PLAYER LIVED");
-
+        document.getElementById("correctSound").play();
         app.resultHeader.innerText = `${data.player} lived`;
         tooth.style.fill = "#D3D2D2";
         setTimeout(() => {
@@ -618,6 +642,7 @@ const app = {
         }, 2000);
       } else {
         console.log("you died");
+        document.getElementById("crocodileSnapSound").play();
         app.resultHeader.innerText = `${data.player} died`;
         let tempText = "player" + String(parseInt(data.playerID) + 1);
         console.log("temp", tempText);
@@ -650,6 +675,8 @@ const app = {
         app.turnContainer.classList.add("none");
         document.getElementById("big").classList.add("none");
         console.log("this it it!!!!!");
+        document.getElementById("lostSound").play();
+
         document.getElementById("big").src =
           app.happyMokokoImageSrc[parseInt(playerID)];
         document.getElementById("big").classList.remove("none");
